@@ -1,0 +1,89 @@
+{% extends "template.html" %}
+{% block content %}
+<table>
+    <thead>
+        <tr>
+            <th>Team</th>
+            <th>Points</th>
+            <th>Total Cups</th>
+            <th>Champion</th>
+            <th>Second</th>
+            <th>Third</th>
+        </tr>
+    </thead>
+    {% for cell in team_leaderboard %}
+        {% if cell.Team.name == "Damon" %}
+            <tr class="damon">
+        {% elif cell.Team.name == "Felix" %}
+            <tr class="felix">
+        {% elif cell.Team.name == "Ian" %}
+            <tr class="ian">
+        {% elif cell.Team.name == "Benny" %}
+            <tr class="benny">
+        {% elif cell.Team.name == "Peter" %}
+            <tr class="peter">
+        {% endif %}
+            <td>{{ cell.Team.name }}</td>
+            <td>{{ cell.points }}</td>
+            <td>{{ cell.total_cups }}</td>
+            <td>{{ cell.team_champion }}</td>
+            <td>{{ cell.team_second }}</td>
+            <td>{{ cell.team_third }}</td>
+        </tr>
+    {% endfor %}
+</table>
+
+<table>
+    <thead>
+        <tr>
+            <th>Season</th>
+            <th>Champion</th>
+            <th>Second</th>
+            <th>Third</th>
+        </tr>
+    </thead>
+    {% for cell in champions_leaderboard %}
+        <tr>
+            <td class="black-background">{{ cell["season"] }}</td>
+            {% if cell["champion"]["team"] == "Damon" %}
+                <td class="damon">
+            {% elif cell["champion"]["team"] == "Felix" %}
+                <td class="felix">
+            {% elif cell["champion"]["team"] == "Ian" %}
+                <td class="ian">
+            {% elif cell["champion"]["team"] == "Benny" %}
+                <td class="benny">
+            {% elif cell["champion"]["team"] == "Peter" %}
+                <td class="peter">
+            {% endif %}
+                {{ cell["champion"]["vehicle"] }}</td>
+            {% if cell["second"]["team"] == "Damon" %}
+                <td class="damon">
+            {% elif cell["second"]["team"] == "Felix" %}
+                <td class="felix">
+            {% elif cell["second"]["team"] == "Ian" %}
+                <td class="ian">
+            {% elif cell["second"]["team"] == "Benny" %}
+                <td class="benny">
+            {% elif cell["second"]["team"] == "Peter" %}
+                <td class="peter">
+            {% endif %}
+                {{ cell["second"]["vehicle"] }}</td>
+            {% if cell["third"]["team"] == "Damon" %}
+                <td class="damon">
+            {% elif cell["third"]["team"] == "Felix" %}
+                <td class="felix">
+            {% elif cell["third"]["team"] == "Ian" %}
+                <td class="ian">
+            {% elif cell["third"]["team"] == "Benny" %}
+                <td class="benny">
+            {% elif cell["third"]["team"] == "Peter" %}
+                <td class="peter">
+            {% endif %}
+                {{ cell["third"]["vehicle"] }}</td>
+        </tr>
+    {% endfor %}
+</table>
+
+
+{% endblock content %}
