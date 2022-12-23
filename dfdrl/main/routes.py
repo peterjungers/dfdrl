@@ -1,6 +1,5 @@
 from flask import Blueprint, render_template
 from sqlalchemy import func, select
-from sqlalchemy.orm import aliased
 
 from dfdrl import db
 from dfdrl.models import (Team, Vehicle, Season, EventType, Event,
@@ -14,44 +13,28 @@ main = Blueprint("main", __name__)
 @main.route("/index")
 @main.route("/leaderboards")
 def index():
+    team_headings = ("Team", "Points", "Total Cups",
+                     "Champion", "Second", "Third")
     team_leaderboard = get_team_leaderboard()
-    champions_leaderboard = get_champions_leaderboard()
 
-    # for row in team_leaderboard:
-    #     print(row.Team.name,
-    #           row.points,
-    #           row.total_cups,
-    #           row.team_champion,
-    #           row.team_second,
-    #           row.team_third)
-    # #
-    for row in champions_leaderboard:
-        print(row["season"], row["champion"]["vehicle"], row["second"]["vehicle"], row["third"]["vehicle"])
+    podium_headings = ("Season", "Champion", "Second", "Third")
+    podium_results = get_podium_results()
 
     return render_template("index.html",
+                           team_headings=team_headings,
                            team_leaderboard=team_leaderboard,
-                           champions_leaderboard=champions_leaderboard)
+                           podium_headings=podium_headings,
+                           podium_results=podium_results)
 
 
 @main.route("/vehicles")
 def vehicles():
+    # Remember to add Count
+    headings = ("Vehicle", "Team", "Weight(g)", "First Season",
+                "Events", "Champion", "Second", "Third")
     table = db.session.execute(select(Vehicle).order_by(Vehicle.name))
 
-    return render_template("vehicles.html", table=table)
-
-    # for row in table:
-    #     print(row.Vehicle.name,
-    #           row.Vehicle.team.id,
-    #           row.Vehicle.weight,
-    #           row.Vehicle.first_season,
-    #           row.Vehicle.event_appearances,
-    #           row.Vehicle.champion,
-    #           row.Vehicle.second,
-    #           row.Vehicle.third)
-
-
-
-
+    return render_template("vehicles.html", headings=headings, table=table)
 
 
 def get_team_leaderboard():
@@ -66,36 +49,35 @@ def get_team_leaderboard():
     team_third = func.sum(Vehicle.third).label("team_third")
 
     team_leaderboard = (db.session.execute(select
-                                (Team, Vehicle, points, total_cups,
-                                 team_champion, team_second, team_third)
-                                .filter(Team.id == Vehicle.team_id)
-                                .group_by(Team.name)
-                                .order_by(points.desc())
-                                ))
-
+                       (Team, Vehicle, points, total_cups,
+                        team_champion, team_second, team_third)
+                       .filter(Team.id == Vehicle.team_id)
+                       .group_by(Team.name)
+                       .order_by(points.desc())
+                       ))
     return team_leaderboard
 
 
-def get_champions_leaderboard():
+def get_podium_results():
     seasons = db.session.execute(select(Season))
-    champions_leaderboard = []
+    podium_results = []
 
     def query(place):
-        result = (db.session.execute(select
-                 (ChampionsLeagueResult, Vehicle)
-                 .filter(ChampionsLeagueResult.season_num
-                         == season.Season.season_num,
-                         ChampionsLeagueResult.place == place,
-                         Vehicle.id == ChampionsLeagueResult.vehicle)
-                 ).first())
-        return result
+        q = (db.session.execute(select
+            (ChampionsLeagueResult, Vehicle)
+            .filter(ChampionsLeagueResult.season_num
+                        == season.Season.season_num,
+                    ChampionsLeagueResult.place == place,
+                    Vehicle.id == ChampionsLeagueResult.vehicle)
+            ).first())
+        return q
 
     for season in seasons:
         champion = query(1)
         second = query(2)
         third = query(3)
 
-        champions_leaderboard.append({
+        podium_results.append({
             "season": season.Season.season_num,
             "champion": {"vehicle": champion.Vehicle.name,
                          "team": champion.Vehicle.team.name},
@@ -105,4 +87,4 @@ def get_champions_leaderboard():
                       "team": third.Vehicle.team.name}
         })
 
-    return champions_leaderboard
+    return podium_results

@@ -1,43 +1,33 @@
 {% extends "template.html" %}
+
+
+
+
 {% block content %}
+
 <table>
     <thead>
-    <tr>
-<!--        <th>Count</th>-->
-        <th>Vehicle</th>
-        <th>Team</th>
-        <th>Weight(g)</th>
-        <th>First Season</th>
-        <th>Events</th>
-        <th>Champion</th>
-        <th>Second</th>
-        <th>Third</th>
-    </tr>
+        <tr>
+            <!-- Remember to add Count header -->
+            {% for header in headings %}
+                <th>{{ header }}</th>
+            {% endfor %}
+        </tr>
     </thead>
-    {% for cell in table %}
-        {% if cell.Vehicle.team.name == "Damon" %}
-            <tr class="damon">
-        {% elif cell.Vehicle.team.name == "Felix" %}
-            <tr class="felix">
-        {% elif cell.Vehicle.team.name == "Ian" %}
-            <tr class="ian">
-        {% elif cell.Vehicle.team.name == "Benny" %}
-            <tr class="benny">
-        {% elif cell.Vehicle.team.name == "Peter" %}
-            <tr class="peter">
-        {% endif %}
-            <td>{{ cell.Vehicle.name }}</td>
-            <td>{{ cell.Vehicle.team.name }}</td>
-            {% if cell.Vehicle.weight %}
-                <td>{{ cell.Vehicle.weight }}</td>
+    {% for row in table %}
+        <tr class="{{ row.Vehicle.team.name|lower }}">
+            <td>{{ row.Vehicle.name }}</td>
+            <td>{{ row.Vehicle.team.name }}</td>
+            {% if row.Vehicle.weight %}
+                <td>{{ row.Vehicle.weight }}</td>
             {% else %}
                 <td>Unknown</td>
             {% endif %}
-            <td>{{ cell.Vehicle.first_season }}</td>
-            <td>{{ cell.Vehicle.event_appearances }}</td>
-            <td>{{ cell.Vehicle.champion }}</td>
-            <td>{{ cell.Vehicle.second }}</td>
-            <td>{{ cell.Vehicle.third }}</td>
+            <td>{{ row.Vehicle.first_season }}</td>
+            <td>{{ row.Vehicle.event_appearances }}</td>
+            <td>{{ row.Vehicle.champion }}</td>
+            <td>{{ row.Vehicle.second }}</td>
+            <td>{{ row.Vehicle.third }}</td>
         </tr>
     {% endfor %}
 </table>
