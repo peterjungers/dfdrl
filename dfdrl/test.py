@@ -7,4 +7,10 @@ d = date(2022, 2, 1)
 
 
 table = {"a": 1, "b": 2, "c": 3}
-print(table["a"])
+# print(sorted(table, key=table.get, reverse=True))
+
+
+
+numbers = (1, 2, 3)
+for n in numbers:
+    print("C"*n)

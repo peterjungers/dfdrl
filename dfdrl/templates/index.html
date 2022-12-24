@@ -40,5 +40,35 @@
     {% endfor %}
 </table>
 
+<!-- Vehicle leaderboard  -->
+<table>
+    <thead>
+        <tr>
+            {% for header in vehicle_headings %}
+                <th>{{ header }}</th>
+            {% endfor %}
+        </tr>
+    </thead>
+    {% for row in vehicle_leaderboard %}
+        {% if row.points != 0 %}
+            <tr class="{{ row.Vehicle.team.name|lower }}">
+                <td>{{ row.Vehicle.name }}</td>
+                <td>{{ row.Vehicle.team.name }}</td>
+                <td>{{ row.Vehicle.event_appearances }}</td>
+                <td>{{ row.cla }}</td>
+                <td>{{ ("%.3f"|format(row.rre)).lstrip("0") }}</td>
+                <td>{{ row.points }}</td>
+                <td class="black-background">
+                    {% if row.Vehicle.champion or row.Vehicle.second or row.Vehicle.third %}
+                        <span class="c-champion">{{ "C" * (row.Vehicle.champion) }}</span>
+                        <span class="c-second">{{ "C" * (row.Vehicle.second) }}</span>
+                        <span class="c-third">{{ "C" * (row.Vehicle.third) }}</span>
+                    {% endif %}
+                </td>
+            </tr>
+        {% endif %}
+    {% endfor %}
+</table>
+
 
 {% endblock content %}

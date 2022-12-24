@@ -20,11 +20,17 @@ def index():
     podium_headings = ("Season", "Champion", "Second", "Third")
     podium_results = get_podium_results()
 
+    vehicle_headings = ("Vehicle", "Team", "Events", "CLA",
+                        "RRE", "Points", "Cups")
+    vehicle_leaderboard = get_vehicle_leaderboard()
+
     return render_template("index.html",
                            team_headings=team_headings,
                            team_leaderboard=team_leaderboard,
                            podium_headings=podium_headings,
-                           podium_results=podium_results)
+                           podium_results=podium_results,
+                           vehicle_headings=vehicle_headings,
+                           vehicle_leaderboard=vehicle_leaderboard)
 
 
 @main.route("/vehicles")
@@ -55,6 +61,7 @@ def get_team_leaderboard():
                        .group_by(Team.name)
                        .order_by(points.desc())
                        ))
+
     return team_leaderboard
 
 
@@ -77,7 +84,8 @@ def get_podium_results():
         second = query(2)
         third = query(3)
 
-        podium_results.append({
+        # Ordered most recent season to oldest
+        podium_results.insert(0, {
             "season": season.Season.season_num,
             "champion": {"vehicle": champion.Vehicle.name,
                          "team": champion.Vehicle.team.name},
@@ -88,3 +96,55 @@ def get_podium_results():
         })
 
     return podium_results
+
+
+def get_vehicle_leaderboard():
+    # Count of all Champions League Appearances (CLA):
+    cla = func.count(ChampionsLeagueResult.vehicle).label("cla")
+
+    # Points earned for podium finish:
+    points = (func.sum(Vehicle.champion * 3
+                       + Vehicle.second * 2
+                       + Vehicle.third)
+                       / cla).label("points")
+
+    # Calculates Ratio of Racing Excellence (RRE)
+    # (points / event appearances):
+    rre = (func.sum(Vehicle.champion * 3.0
+                    + Vehicle.second * 2.0
+                    + Vehicle.third)
+                    / cla
+                    / Vehicle.event_appearances
+                    * 2).label("rre")
+
+    vehicle_leaderboard = (db.session.execute(select
+                          (Vehicle, cla, points, rre)
+                          .filter(Vehicle.id == ChampionsLeagueResult.vehicle)
+                          .group_by(Vehicle.id)
+                          .order_by(points.desc(),
+                                    rre.desc(),
+                                    cla,
+                                    Vehicle.name)
+                          ))
+
+    # test = (db.session.execute(select(Vehicle, points)
+    #                            .group_by(Vehicle.name)
+    #                            .order_by(points)
+    #                            ))
+    #
+    # for row in test:
+    #     print(row.Vehicle.name, row.points)
+
+    # for row in vehicle_leaderboard:
+    #     print(row)
+
+
+    # for row in vehicle_leaderboard:
+    #     print(row)
+
+    return vehicle_leaderboard
+
+
+
+    # # RRE as in index.html
+    # ("%.3f" | format((row.points / row.Vehicle.event_appearances) * 2)).lstrip("0")
