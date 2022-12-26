@@ -1,10 +1,63 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
+{% extends "template.html" %}
+{% block content %}
+<img style="width:300px"src="{{ url_for('static', filename='images/' + season_num + ".jpg") }}" alt="Season {{ season_num }} Champion">
 
-</body>
-</html>
+<!-- Champions League results -->
+<table>
+    <thead>
+        <tr>
+            {% for header in cl_results_headings %}
+                <th>{{ header }}</th>
+            {% endfor %}
+        </tr>
+    </thead>
+    {% for row in cl_results %}
+        <tr class="{{ row.Vehicle.team.name|lower }}">
+            <td>{{ row.ChampionsLeagueResult.place }}</td>
+            <td>{{ row.Vehicle.name }}</td>
+            <td>{{ row.Vehicle.team.name }}</td>
+            <td>{{ row.ChampionsLeagueResult.points }}</td>
+        </tr>
+    {% endfor %}
+</table>
+
+<!-- Regular Season events -->
+<table>
+    <thead>
+        <tr>
+            {% for header in season_headings %}
+                <th>{{ header }}</th>
+            {% endfor %}
+        </tr>
+    </thead>
+    {% for row in regular_season %}
+        <tr class="{{ row.Vehicle.team.name|lower }}">
+            <td>{{ row.Event.event_num }}</td>
+            <td>{{ row.Event.name }}</td>
+            <td>{{ row.Event.date.strftime("%m.%d.%Y") }}</td>
+            <td>{{ row.Vehicle.name }}</td>
+            <td>{{ row.Vehicle.team.name }}</td>
+        </tr>
+    {% endfor %}
+</table>
+
+<!-- Champions League events -->
+<table>
+    <thead>
+        <tr>
+            {% for header in season_headings %}
+                <th>{{ header }}</th>
+            {% endfor %}
+        </tr>
+    </thead>
+    {% for row in champions_league %}
+        <tr class="{{ row.Vehicle.team.name|lower }}">
+            <td>{{ row.Event.event_num }}</td>
+            <td>{{ row.Event.name }}</td>
+            <td>{{ row.Event.date.strftime("%m.%d.%Y") }}</td>
+            <td>{{ row.Vehicle.name }}</td>
+            <td>{{ row.Vehicle.team.name }}</td>
+        </tr>
+    {% endfor %}
+</table>
+{% endblock content %}

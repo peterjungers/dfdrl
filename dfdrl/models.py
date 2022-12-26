@@ -75,7 +75,7 @@ class Event(db.Model):
     champions_league = db.Column(db.Boolean)
 
     def __repr__(self):
-        return (f"<id = {self.id}"
+        return (f"<id = {self.id}, "
                 f"season_num = {self.season_num}, "
                 f"event_num = {self.event_num}, "
                 f"type = {self.type}"

@@ -1,8 +1,4 @@
 {% extends "template.html" %}
-
-
-
-
 {% block content %}
 
 <table>
@@ -14,7 +10,7 @@
             {% endfor %}
         </tr>
     </thead>
-    {% for row in table %}
+    {% for row in league_vehicles %}
         <tr class="{{ row.Vehicle.team.name|lower }}">
             <td>{{ row.Vehicle.name }}</td>
             <td>{{ row.Vehicle.team.name }}</td>

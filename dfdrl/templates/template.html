@@ -9,29 +9,32 @@
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 
     {% if title %}
-        <title>Diecast Racing — {{ title }}</title>
+        <title>DFDRL — {{ title }}</title>
     {% else %}
-        <title>Diecast Racing</title>
+        <title>DFDRL</title>
     {% endif %}
 </head>
 <body>
     <header>
         <nav class="navbar navbar-expand-md navbar-dark bg-dark">
             <div class="container-fluid">
-                <a class="navbar-brand" href="/">DDRL</a>
+                <a class="navbar-brand" href="/">DFDRL</a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
                 <div class="collapse navbar-collapse" id="navbar">
                     <ul class="navbar-nav me-auto mb-3 mb-md-0">
                         <li class="nav-item">
-                            <a class="nav-link active" aria-current="page" href="#">Home</a>
+                            <a class="nav-link active" aria-current="page" href="{{ url_for('main.index') }}">Leaderboards</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="#">Seasons</a>
+                            <a href="#" class="nav-link">Seasons</a>
                         </li>
                         <li class="nav-item">
                              <a href="{{ url_for('main.vehicles') }}" class="nav-link">Vehicles</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#">About</a>
                         </li>
                     </ul>
                     <ul class="navbar-nav ms-auto mb-0 mb-md-0">
@@ -43,6 +46,19 @@
             </div>
         </nav>
     </header>
+
+    <div>
+        <a class="damon" href="{{ url_for('main.season', season_num='1') }}">Season 1</a>
+        <a class="damon" href="{{ url_for('main.season', season_num='2') }}">Season 2</a>
+        <a class="damon" href="{{ url_for('main.season', season_num='3') }}">Season 3</a>
+        <a class="damon" href="{{ url_for('main.season', season_num='4') }}">Season 4</a>
+        <a class="peter" href="{{ url_for('main.season', season_num='5') }}">Season 5</a>
+        <a class="damon" href="{{ url_for('main.season', season_num='6') }}">Season 6</a>
+        <a class="ian" href="{{ url_for('main.season', season_num='7') }}">Season 7</a>
+        <a class="benny" href="{{ url_for('main.season', season_num='8') }}">Season 8</a>
+        <a class="damon" href="{{ url_for('main.season', season_num='9') }}">Season 9</a>
+        <a class="benny" href="{{ url_for('main.season', season_num='10') }}">Season 10</a>
+    </div>
 
     {% block content %}{% endblock content %}
     <!-- Bootstrap JS -->

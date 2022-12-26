@@ -70,5 +70,39 @@
     {% endfor %}
 </table>
 
+<!-- Event tally  -->
+<table>
+    <thead>
+    <tr>
+        {% for header in event_headings %}
+            <th>{{ header }}</th>
+        {% endfor %}
+    </tr>
+    </thead>
+    {% for row in event_tallies %}
+        <tr>
+            <td>{{ row.EventType.name }}</td>
+            <td>{{ row.event_sum }}</td>
+        </tr>
+    {% endfor %}
+</table>
+
+<!-- Racing affiliates  -->
+<table>
+    <thead>
+    <tr>
+        {% for header in affiliate_headings %}
+            <th>{{ header }}</th>
+        {% endfor %}
+    </tr>
+    </thead>
+    {% for row in affiliates %}
+        <tr>
+            <td>{{ row.Team.name }}</td>
+            <td>{{ row.Team.affiliate }}</td>
+        </tr>
+    {% endfor %}
+</table>
+
 
 {% endblock content %}
