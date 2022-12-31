@@ -1,4 +1,6 @@
 {% extends "template.html" %}
+{% set active_page = "leaderboards" %}
+
 {% block content %}
 <!-- Team leaderboard -->
 <table>
@@ -32,7 +34,7 @@
     </thead>
     {% for row in podium_results %}
         <tr>
-            <td class="black-background">{{ row["season"] }}</td>
+            <td class="bg-dark text-light">{{ row["season"] }}</td>
             <td class="{{ row['champion']['team']|lower }}">{{ row["champion"]["vehicle"] }}</td>
             <td class="{{ row['second']['team']|lower }}">{{ row["second"]["vehicle"] }}</td>
             <td class="{{ row['third']['team']|lower }}">{{ row["third"]["vehicle"] }}</td>
@@ -58,7 +60,7 @@
                 <td>{{ row.cla }}</td>
                 <td>{{ ("%.3f"|format(row.rre)).lstrip("0") }}</td>
                 <td>{{ row.points }}</td>
-                <td class="black-background">
+                <td class="bg-dark text-light">
                     {% if row.Vehicle.champion or row.Vehicle.second or row.Vehicle.third %}
                         <span class="c-champion">{{ "C" * (row.Vehicle.champion) }}</span>
                         <span class="c-second">{{ "C" * (row.Vehicle.second) }}</span>

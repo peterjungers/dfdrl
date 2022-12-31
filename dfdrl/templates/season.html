@@ -1,6 +1,18 @@
 {% extends "template.html" %}
+{% set active_page = "seasons" %}
+{% set active_page_season = "season/" + season_num %} {# Used in script.js #}
+{% set team = [] %} {# Accessed in script.js using team[0] See below. #}
+
+
+
 {% block content %}
 <img style="width:300px"src="{{ url_for('static', filename='images/' + season_num + ".jpg") }}" alt="Season {{ season_num }} Champion">
+{% for row in champion %}
+    {{ row.Vehicle.name }}
+    {{ row.Vehicle.team.name }}
+    {% set t = team.append(row.Vehicle.team.name|lower) %} {# Workaround to obtain team lower name for template.html #}
+{% endfor %}
+
 
 <!-- Champions League results -->
 <table>
@@ -11,14 +23,16 @@
             {% endfor %}
         </tr>
     </thead>
-    {% for row in cl_results %}
-        <tr class="{{ row.Vehicle.team.name|lower }}">
-            <td>{{ row.ChampionsLeagueResult.place }}</td>
-            <td>{{ row.Vehicle.name }}</td>
-            <td>{{ row.Vehicle.team.name }}</td>
-            <td>{{ row.ChampionsLeagueResult.points }}</td>
-        </tr>
-    {% endfor %}
+    <tbody>
+        {% for row in cl_results %}
+            <tr class="{{ row.Vehicle.team.name|lower }}">
+                <td>{{ row.ChampionsLeagueResult.place }}</td>
+                <td>{{ row.Vehicle.name }}</td>
+                <td>{{ row.Vehicle.team.name }}</td>
+                <td>{{ row.ChampionsLeagueResult.points }}</td>
+            </tr>
+        {% endfor %}
+    </tbody>
 </table>
 
 <!-- Regular Season events -->
@@ -30,15 +44,17 @@
             {% endfor %}
         </tr>
     </thead>
-    {% for row in regular_season %}
-        <tr class="{{ row.Vehicle.team.name|lower }}">
-            <td>{{ row.Event.event_num }}</td>
-            <td>{{ row.Event.name }}</td>
-            <td>{{ row.Event.date.strftime("%m.%d.%Y") }}</td>
-            <td>{{ row.Vehicle.name }}</td>
-            <td>{{ row.Vehicle.team.name }}</td>
-        </tr>
-    {% endfor %}
+    <tbody>
+        {% for row in regular_season %}
+            <tr class="{{ row.Vehicle.team.name|lower }}">
+                <td>{{ row.Event.event_num }}</td>
+                <td>{{ row.Event.name }}</td>
+                <td>{{ row.Event.date.strftime("%m.%d.%Y") }}</td>
+                <td>{{ row.Vehicle.name }}</td>
+                <td>{{ row.Vehicle.team.name }}</td>
+            </tr>
+        {% endfor %}
+    </tbody>
 </table>
 
 <!-- Champions League events -->
@@ -50,14 +66,16 @@
             {% endfor %}
         </tr>
     </thead>
-    {% for row in champions_league %}
-        <tr class="{{ row.Vehicle.team.name|lower }}">
-            <td>{{ row.Event.event_num }}</td>
-            <td>{{ row.Event.name }}</td>
-            <td>{{ row.Event.date.strftime("%m.%d.%Y") }}</td>
-            <td>{{ row.Vehicle.name }}</td>
-            <td>{{ row.Vehicle.team.name }}</td>
-        </tr>
-    {% endfor %}
+    <tbody>
+        {% for row in champions_league %}
+            <tr class="{{ row.Vehicle.team.name|lower }}">
+                <td>{{ row.Event.event_num }}</td>
+                <td>{{ row.Event.name }}</td>
+                <td>{{ row.Event.date.strftime("%m.%d.%Y") }}</td>
+                <td>{{ row.Vehicle.name }}</td>
+                <td>{{ row.Vehicle.team.name }}</td>
+            </tr>
+        {% endfor %}
+    </tbody>
 </table>
 {% endblock content %}

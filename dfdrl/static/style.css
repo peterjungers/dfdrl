@@ -1,40 +1,142 @@
+
+:root {
+    --damon: #6fa8dc;
+    --felix: #f6b26b;
+    --ian: #e06666;
+    --benny: #ffd966;
+    --peter: #93c47d;
+}
+
+
+.navbar a:focus-visible {
+    outline: none;
+    text-decoration: underline;
+    text-underline-offset: 4px;
+}
+
+.dropdown-menu a:focus {
+    text-decoration: none;
+}
+
+.navbar-toggler:focus {
+    outline: none;
+    box-shadow: none;
+}
+
+.navbar-toggler:focus-visible {
+    outline: 4px solid #868688;
+    box-shadow: inset 0 3px 5px rgba(0, 0, 0, 0.125);
+}
+
+
+
+/*.dropdown-menu {*/
+/*    max-height: 155px;*/
+/*    overflow-y: auto;*/
+/*}*/
+
+/*.dropdown-item:active {*/
+/*    background-color: #2c3034;*/
+/*}*/
+
+.dropdown-menu > li {
+    display: inline-block;
+    width: 4.25rem;
+}
+
+/* || Team background colors */
 .damon {
-    background-color: #6fa8dc;
+    background-color: var(--damon);
 }
 
 .felix {
-    background-color: #f6b26b;
+    background-color: var(--felix);
 }
 
 .ian {
-    background-color: #e06666;
+    background-color: var(--ian);
 }
 
 .benny {
-    background-color: #ffd966;
+    background-color: var(--benny);
 }
 
 .peter {
-    background-color: #93c47d;
+    background-color: var(--peter);
 }
 
-.black-background {
-    background-color: black;
-    color: white;
+.damon,
+.felix,
+.ian,
+.benny,
+.peter {
+    color: var(--bs-dark);
 }
 
 
+/* || Team buttons */
+.btn-damon:hover {
+    background-color: var(--damon);
+}
 
+.btn-felix:hover {
+    background-color: var(--felix);
+}
+
+.btn-ian:hover {
+    background-color: var(--ian);
+}
+
+.btn-benny:hover {
+    background-color: var(--benny);
+}
+
+.btn-peter:hover {
+    background-color: var(--peter);
+}
+
+.btn-damon:hover,
+.btn-felix:hover,
+.btn-ian:hover,
+.btn-benny:hover,
+.btn-peter:hover {
+    color: var(--bs-dark);
+}
+
+.btn-dark.btn-damon:active,
+.btn-dark.btn-felix:active,
+.btn-dark.btn-ian:active,
+.btn-dark.btn-benny:active,
+.btn-dark.btn-peter:active {
+    background-color: var(--bs-btn-bg);
+    color: var(--bs-btn-color);
+}
+
+.btn-dark:focus {
+    background-color: var(--bs-btn-bg);
+}
+
+
+.sticky-header {
+    position: sticky;
+    top: 56px;
+}
+
+.sticky-seasons {
+    position: sticky;
+    top: 112px;
+}
+
+
+/* Stylized C for Cups column in Vehicle Leaderboard table */
 .c-champion {
-    color: #6fa8dc;
+    color: var(--damon);
 }
 
 .c-second {
-    color: #e06666;
+    color: var(--ian);
 }
 
 .c-third {
-    color: white;
+    color: var(--text-white);
 }
-
-

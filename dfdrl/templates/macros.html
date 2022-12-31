@@ -1,0 +1,24 @@
+{# Set Bootstrap active class for navbar links #}
+{% macro set_class_active(active_page, page_name) -%}
+    {% if active_page == page_name %}active{% endif %}
+{%- endmacro %}
+
+{# Set active page as aria-current #}
+{#{% macro set_aria_current(active_page, page_name) -%}#}
+{#    {% if active_page == page_name %}aria-current="page"{% endif %}#}
+{#{%- endmacro %}#}
+
+{# Set active button link to background color of respective team classes #}
+{#{% macro set_team_class(active_page_season, page_name, team) -%}#}
+{#    {%- if active_page_season == page_name and team[0] == "damon" -%}#}
+{#        damon#}
+{#    {%- elif active_page_season == page_name and team[0] == "felix" -%}#}
+{#        felix#}
+{#    {%- elif active_page_season == page_name and team[0] == "ian" -%}#}
+{#        ian#}
+{#    {%- elif active_page_season == page_name and team[0] == "benny" -%}#}
+{#        benny#}
+{#    {%- elif active_page_season == page_name and team[0] == "peter" -%}#}
+{#        peter#}
+{#    {%- endif %}#}
+{#{%- endmacro %}#}

@@ -41,7 +41,7 @@ def season(season_num):
 
     season_headings, regular_season, champions_league = get_season(season_num)
     # cl stands for Champions League:
-    cl_results_headings, cl_results = get_cl_results(season_num)
+    cl_results_headings, cl_results, champion = get_cl_results(season_num)
 
     return render_template("season.html",
                            title=title,
@@ -50,7 +50,8 @@ def season(season_num):
                            regular_season=regular_season,
                            champions_league=champions_league,
                            cl_results_headings=cl_results_headings,
-                           cl_results=cl_results)
+                           cl_results=cl_results,
+                           champion=champion)
 
 
 @main.route("/vehicles")
@@ -58,8 +59,8 @@ def vehicles():
     title = "Vehicles"
 
     # Remember to add Count
-    headings = ("Vehicle", "Team", "Weight(g)", "First Season",
-                "Events", "Champion", "Second", "Third")
+    # headings = ("Vehicle", "Team", "Weight(g)", "First Season",
+    #             "Events", "Champion", "Second", "Third")
 
     league_vehicles = db.session.execute(
                       select(Vehicle).order_by(Vehicle.name)
@@ -67,7 +68,7 @@ def vehicles():
 
     return render_template("vehicles.html",
                            title=title,
-                           headings=headings,
+                           # headings=headings,
                            league_vehicles=league_vehicles)
 
 
@@ -209,9 +210,16 @@ def get_cl_results(season_num):
     cl_results_headings = ("Place", "Vehicle", "Team", "Points")
 
     cl_results = db.session.execute(
-                select(ChampionsLeagueResult, Vehicle)
-                .filter(ChampionsLeagueResult.season_num == season_num,
-                        ChampionsLeagueResult.vehicle == Vehicle.id)
-                )
+                 select(ChampionsLeagueResult, Vehicle)
+                 .filter(ChampionsLeagueResult.season_num == season_num,
+                         ChampionsLeagueResult.vehicle == Vehicle.id)
+                 )
 
-    return cl_results_headings, cl_results
+    champion = db.session.execute(
+               select(ChampionsLeagueResult, Vehicle)
+               .filter(ChampionsLeagueResult.season_num == season_num,
+                      ChampionsLeagueResult.vehicle == Vehicle.id,
+                      ChampionsLeagueResult.place == 1)
+               )
+
+    return cl_results_headings, cl_results, champion
