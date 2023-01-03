@@ -1,7 +1,8 @@
 {% extends "template.html" %}
-{% set active_page = "seasons" %}
-{% set active_page_season = "season/" + season_num %} {# Used in script.js #}
-{% set team = [] %} {# Accessed in script.js using team[0] See below. #}
+{#{% set active_page = "seasons" %}#}
+{% set active_page = "season/" %} {# Used in script.js #}
+{% set number = season_num %}
+{% set team = [] %} {# Accessed in script.js using team[0] See below for more info. #}
 
 
 
@@ -10,7 +11,7 @@
 {% for row in champion %}
     {{ row.Vehicle.name }}
     {{ row.Vehicle.team.name }}
-    {% set t = team.append(row.Vehicle.team.name|lower) %} {# Workaround to obtain team lower name for template.html #}
+    {% set t = team.append(row.Vehicle.team.name|lower) %} {# Appending to a loist is a workaround to obtain team lower name for template.html #}
 {% endfor %}
 
 

@@ -45,23 +45,28 @@
 }
 
 /* || Team background colors */
-.damon {
+.damon,
+td.damon {
     background-color: var(--damon);
 }
 
-.felix {
+.felix,
+td.felix {
     background-color: var(--felix);
 }
 
-.ian {
+.ian,
+td.ian {
     background-color: var(--ian);
 }
 
-.benny {
+.benny,
+td.benny {
     background-color: var(--benny);
 }
 
-.peter {
+.peter,
+td.peter {
     background-color: var(--peter);
 }
 
@@ -116,6 +121,10 @@
     background-color: var(--bs-btn-bg);
 }
 
+.btn-dark.disabled {
+    opacity: 1;
+}
+
 
 .sticky-header {
     position: sticky;
@@ -124,7 +133,7 @@
 
 .sticky-seasons {
     position: sticky;
-    top: 112px;
+    top: 149px;
 }
 
 
