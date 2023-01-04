@@ -10,30 +10,30 @@
 {#                <th scope="col">{{ header }}</th>#}
 {#            {% endfor %}#}
             <th class="fw-normal" scope="col">Vehicle</th>
-            <th class="fw-normal d-none d-md-table-cell" scope="col">Team</th>
+            <th class="d-none d-md-table-cell fw-normal" scope="col">Team</th>
             <th class="fw-normal" scope="col">Weight(g)</th>
-            <th class="fw-normal d-none d-lg-table-cell" scope="col">First Season</th>
+            <th class="d-none d-lg-table-cell fw-normal" scope="col">First Season</th>
             <th class="fw-normal" scope="col">Events</th>
-            <th class="fw-normal d-none d-sm-table-cell" scope="col">Champion</th>
-            <th class="fw-normal d-none d-md-table-cell" scope="col">Second</th>
-            <th class="fw-normal d-none d-md-table-cell" scope="col">Third</th>
+            <th class="d-none d-sm-table-cell fw-normal" scope="col">Champion</th>
+            <th class="d-none d-md-table-cell fw-normal" scope="col">Second</th>
+            <th class="d-none d-md-table-cell fw-normal" scope="col">Third</th>
         </tr>
     </thead>
     <tbody>
         {% for row in league_vehicles %}
             <tr class="{{ row.Vehicle.team.name|lower }}">
                 <td class="fw-bold">{{ row.Vehicle.name }}</td>
-                <td class="fw-light d-none d-md-table-cell">{{ row.Vehicle.team.name }}</td>
+                <td class="d-none d-md-table-cell fw-light">{{ row.Vehicle.team.name }}</td>
                 {% if row.Vehicle.weight %}
                     <td class="fw-light">{{ row.Vehicle.weight }}</td>
                 {% else %}
                     <td class="fw-light">Unknown</td>
                 {% endif %}
-                <td class="fw-light d-none d-lg-table-cell">{{ row.Vehicle.first_season }}</td>
+                <td class="d-none d-lg-table-cell fw-light">{{ row.Vehicle.first_season }}</td>
                 <td class="fw-light">{{ row.Vehicle.event_appearances }}</td>
-                <td class="fw-light d-none d-sm-table-cell">{{ row.Vehicle.champion }}</td>
-                <td class="fw-light d-none d-md-table-cell">{{ row.Vehicle.second }}</td>
-                <td class="fw-light d-none d-md-table-cell">{{ row.Vehicle.third }}</td>
+                <td class="d-none d-sm-table-cell fw-light">{{ row.Vehicle.champion }}</td>
+                <td class="d-none d-md-table-cell fw-light">{{ row.Vehicle.second }}</td>
+                <td class="d-none d-md-table-cell fw-light">{{ row.Vehicle.third }}</td>
             </tr>
         {% endfor %}
     </tbody>

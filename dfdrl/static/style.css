@@ -131,9 +131,13 @@ td.peter {
     top: 56px;
 }
 
-.sticky-seasons {
-    position: sticky;
-    top: 149px;
+/*.sticky-seasons {*/
+/*    position: sticky;*/
+/*    top: 88px;*/
+/*}*/
+
+.bg-dropdown {
+    background-color: #c5c6c8;
 }
 
 

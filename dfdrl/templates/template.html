@@ -16,7 +16,8 @@
         <title>DFDRL</title>
     {% endif %}
 </head>
-<body class="bg-light-subtle">
+<body class="bg-dark">
+<div class="bg-light-subtle pb-4">
     <header class="sticky-top shadow">
         <!-- Navbar -->
         <nav class="navbar navbar-expand-xl navbar-dark bg-dark">
@@ -64,20 +65,30 @@
         </nav>
     </header>
 
-    <main class="container mt-5">
+    <main class="container mt-4">
         <div class="row">
             <!-- Main content -->
             <div class="col-xl-11 col-lg-12">
-                <div class="d-flex justify-content-between">
-                    <h1 class="fs-4">Damon & Felix Die-Cast Racing League</h1>
-                    <h2 class="fs-4">Leaderboards</h2>
+                <div class="d-md-flex gap-0 column-gap-3 mb-3">
+                    <h1 class="d-none d-md-block fs-5 fw-bold">Damon & Felix Die-Cast Racing League</h1>
+                    <div class="d-flex gap-0 column-gap-3">
+                        <p class="h2 d-none d-md-block fs-5 fw-light ">//</p>
+                        <h2 class="fs-5 fw-normal">{{ title }}</h2>
+                        {% if number %}
+                            <p class="h2 fs-5 fw-light">//</p>
+                            <h2 class="fs-5 fw-light">Spring–Fall 2022</h2>
+                        {% endif %}
+                    </div>
                 </div>
                 {% block content %}{% endblock content %}
             </div>
 
             <!-- Season links sidebar -->
             <div class="col-1 d-none d-xl-block">
-                <div class="d-grid gap-2 sticky-seasons">
+                <div class="d-grid gap-2">
+                    <div class="text-center mb-3">
+                        <h3 class="d-inline align-bottom fs-6 fw-normal">Seasons</h3> <!-- Should not be h3, figure out margins, seem hacky -->
+                    </div>
                     <a class="btn btn-dark border-0 fw-bold btn-benny team-active-10" role="button" href="{{ url_for('main.season', season_num='10') }}">10</a>
                     <a class="btn btn-dark border-0 fw-bold btn-damon team-active-9" role="button" href="{{ url_for('main.season', season_num='9') }}">9</a>
                     <a class="btn btn-dark border-0 fw-bold btn-benny team-active-8" role="button" href="{{ url_for('main.season', season_num='8') }}">8</a>
@@ -88,11 +99,12 @@
                     <a class="btn btn-dark border-0 fw-bold btn-damon team-active-3" role="button" href="{{ url_for('main.season', season_num='3') }}">3</a>
                     <a class="btn btn-dark border-0 fw-bold btn-damon team-active-2" role="button" href="{{ url_for('main.season', season_num='2') }}">2</a>
                     <a class="btn btn-dark border-0 fw-bold btn-damon team-active-1" role="button" href="{{ url_for('main.season', season_num='1') }}">1</a>
-                    <h3 class="fs-6 text-center mt-1">Seasons</h3>
+
                 </div>
             </div>
         </div>
     </main>
+</div>
 
     <!-- Bootstrap JS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js" integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN" crossorigin="anonymous"></script>
@@ -104,5 +116,6 @@
         </script>
     {% endif %}
     <script src="{{ url_for('static', filename='script.js') }}"></script>
+
 </body>
 </html>

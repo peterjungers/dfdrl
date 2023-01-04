@@ -15,23 +15,18 @@ main = Blueprint("main", __name__)
 def index():
     title = "Leaderboards"
 
-    team_headings, team_leaderboard = get_team_leaderboard()
-    podium_headings, podium_results = get_podium_results()
-    vehicle_headings, vehicle_leaderboard = get_vehicle_leaderboard()
-    event_headings, event_tallies = get_event_tallies()
-    affiliate_headings, affiliates = get_affiliates()
+    team_leaderboard = get_team_leaderboard()
+    podium_results = get_podium_results()
+    vehicle_leaderboard = get_vehicle_leaderboard()
+    event_tallies = get_event_tallies()
+    affiliates = get_affiliates()
 
     return render_template("index.html",
                            title=title,
-                           team_headings=team_headings,
                            team_leaderboard=team_leaderboard,
-                           podium_headings=podium_headings,
                            podium_results=podium_results,
-                           vehicle_headings=vehicle_headings,
                            vehicle_leaderboard=vehicle_leaderboard,
-                           event_headings=event_headings,
                            event_tallies=event_tallies,
-                           affiliate_headings=affiliate_headings,
                            affiliates=affiliates)
 
 
@@ -39,17 +34,15 @@ def index():
 def season(season_num):
     title = f"Season {season_num}"
 
-    season_headings, regular_season, champions_league = get_season(season_num)
+    regular_season, champions_league = get_season(season_num)
     # cl stands for Champions League:
-    cl_results_headings, cl_results, champion = get_cl_results(season_num)
+    cl_results, champion = get_cl_results(season_num)
 
     return render_template("season.html",
                            title=title,
                            season_num=season_num,
-                           season_headings=season_headings,
                            regular_season=regular_season,
                            champions_league=champions_league,
-                           cl_results_headings=cl_results_headings,
                            cl_results=cl_results,
                            champion=champion)
 
@@ -73,9 +66,6 @@ def vehicles():
 
 
 def get_team_leaderboard():
-    team_headings = ("Team", "Points", "Total Cups",
-                     "Champion", "Second", "Third")
-
     points = func.sum((Vehicle.champion * 3)
                       + (Vehicle.second * 2)
                       + Vehicle.third).label("points")
@@ -94,12 +84,10 @@ def get_team_leaderboard():
                        .order_by(points.desc())
                        )
 
-    return team_headings, team_leaderboard
+    return team_leaderboard
 
 
 def get_podium_results():
-    podium_headings = ("Season", "Champion", "Second", "Third")
-
     seasons = db.session.execute(select(Season))
     podium_results = []
 
@@ -129,13 +117,10 @@ def get_podium_results():
                       "team": third.Vehicle.team.name}
         })
 
-    return podium_headings, podium_results
+    return podium_results
 
 
 def get_vehicle_leaderboard():
-    vehicle_headings = ("Vehicle", "Team", "Events", "CLA",
-                        "RRE", "Points", "Cups")
-
     # Count of all Champions League Appearances (CLA):
     cla = func.count(ChampionsLeagueResult.vehicle).label("cla")
 
@@ -164,12 +149,10 @@ def get_vehicle_leaderboard():
                                     Vehicle.name)
                           )
 
-    return vehicle_headings, vehicle_leaderboard
+    return vehicle_leaderboard
 
 
 def get_event_tallies():
-    event_headings = ("Event", "Amount")
-
     event_sum = func.count(Event.type).label("event_sum")
 
     event_tally = db.session.execute(
@@ -179,18 +162,15 @@ def get_event_tallies():
                   .order_by(EventType.name)
                   )
 
-    return event_headings, event_tally
+    return event_tally
 
 
 def get_affiliates():
-    affiliate_headings = ("Team", "Affiliate")
     affiliates = db.session.execute(select(Team))
-    return affiliate_headings, affiliates
+    return affiliates
 
 
 def get_season(season_num):
-    season_headings = ("No.", "Event", "Date", "Winner", "Team")
-
     def query(boolean):
         q = db.session.execute(
             select(Event, Vehicle)
@@ -203,12 +183,68 @@ def get_season(season_num):
     regular_season = query(False)
     champions_league = query(True)
 
-    return season_headings, regular_season, champions_league
+
+
+
+    reg_dates = []
+    for row in regular_season:
+        reg_dates.append(row.Event.date)
+
+    cl_dates = []
+    for row in champions_league:
+        cl_dates.append(row.Event.date)
+
+    def get_season(year):
+        if (year.month, year.day) < (3, 20):
+            season = "Winter"
+        elif (year.month, year.day) < (6, 17):
+            season = "Spring"
+        elif (year.month, year.day) < (9, 21):
+            season = "Summer"
+        elif (year.month, year.day) < (12, 21):
+            season = "Fall"
+
+        return season
+
+    date_start = min(reg_dates)
+    season_start = get_season(date_start)
+    date_end = max(cl_dates)
+    season_end = get_season(date_end)
+
+    if date_start.year == date_end.year and season_start == season_end:
+        season_duraton = f"{season_start} {date_start.year}"
+    elif date_start.year == date_end.year:
+            season_duraton = f"{season_start}–{season_end} {date_start.year}"
+    elif date_start != date_end:
+        season_duraton = f"{season_start} {date_start.year}–{season_end} {date_end.year}"
+
+    print(season_duraton)
+
+
+
+
+
+
+    return regular_season, champions_league
+
+
+def get_season_duration(dates):
+    dates = []
+    for row in regular_season:
+        dates.append(row.Event.date)
+
+    for date in dates:
+        if (date.month, date.day) <= (3, 21):
+            season = "Winter"
+        elif (date.month, date.day) <= (6, 21):
+            season = "Spring"
+        elif (date.month, date.day) <= (9, 21):
+            season = "Summer"
+        elif (date.month, date.day) <= (12, 21):
+            season = "Fall"
 
 
 def get_cl_results(season_num):
-    cl_results_headings = ("Place", "Vehicle", "Team", "Points")
-
     cl_results = db.session.execute(
                  select(ChampionsLeagueResult, Vehicle)
                  .filter(ChampionsLeagueResult.season_num == season_num,
@@ -220,6 +256,6 @@ def get_cl_results(season_num):
                .filter(ChampionsLeagueResult.season_num == season_num,
                       ChampionsLeagueResult.vehicle == Vehicle.id,
                       ChampionsLeagueResult.place == 1)
-               )
+               ).all()
 
-    return cl_results_headings, cl_results, champion
+    return cl_results, champion

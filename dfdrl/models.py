@@ -78,7 +78,7 @@ class Event(db.Model):
         return (f"<id = {self.id}, "
                 f"season_num = {self.season_num}, "
                 f"event_num = {self.event_num}, "
-                f"type = {self.type}"
+                f"type = {self.type}, "
                 f"name = {self.name}, "
                 f"date = {self.date}, "
                 f"winner = {self.winner}, "
