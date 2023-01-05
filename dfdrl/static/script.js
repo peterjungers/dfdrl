@@ -1,8 +1,8 @@
 function set_team_class(active_page_season, team) {
     const seasons = [10, 9, 8, 7, 6, 5, 4, 3, 2, 1];
 
-    seasons.forEach(number => {
-        instances = document.querySelectorAll(".team-active-" + number);
+    seasons.forEach(season_num => {
+        instances = document.querySelectorAll(".team-active-" + season_num);
 
         /* Adding index number (i.e., team[0]) is a workaround in Jinja2;
         see seasons.html for more info. */

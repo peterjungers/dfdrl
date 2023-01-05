@@ -57,7 +57,7 @@
                              <a class="nav-link {{ macros.set_class_active(active_page, 'vehicles') }}" href="{{ url_for('main.vehicles') }}">Vehicles</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link {{ macros.set_class_active(active_page, 'about') }}" href="#">About</a>
+                            <a class="nav-link {{ macros.set_class_active(active_page, 'about') }}" href="{{ url_for('main.about') }}">About</a>
                         </li>
                     </ul>
                 </div>
@@ -70,13 +70,13 @@
             <!-- Main content -->
             <div class="col-xl-11 col-lg-12">
                 <div class="d-md-flex gap-0 column-gap-3 mb-3">
-                    <h1 class="d-none d-md-block fs-5 fw-bold">Damon & Felix Die-Cast Racing League</h1>
+                    <h1 class="d-none d-lg-block fs-5 fw-bold">Damon & Felix Die-Cast Racing League</h1>
                     <div class="d-flex gap-0 column-gap-3">
-                        <p class="h2 d-none d-md-block fs-5 fw-light ">//</p>
+                        <p class="h2 d-none d-lg-block fs-5 fw-light ">//</p>
                         <h2 class="fs-5 fw-normal">{{ title }}</h2>
-                        {% if number %}
-                            <p class="h2 fs-5 fw-light">//</p>
-                            <h2 class="fs-5 fw-light">Spring–Fall 2022</h2>
+                        {% if season_duration %}
+                            <p class="h2 d-none d-sm-block fs-5 fw-light">//</p>
+                            <h2 class="d-none d-sm-block fs-5 fw-light">{{ season_duration }}</h2>
                         {% endif %}
                     </div>
                 </div>
@@ -109,9 +109,9 @@
     <!-- Bootstrap JS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js" integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN" crossorigin="anonymous"></script>
     <!-- Custom JS -->
-    {% if number %} {# Script is run only for season pages #}
+    {% if season_num %} {# Script is run only for season pages #}
         <script type="text/javascript">
-            const active_page_season = {{ active_page|default("")|tojson|safe }} + {{ number }};
+            const active_page_season = {{ active_page|default("")|tojson|safe }} + {{ season_num }};
             const team = {{ team|default("")|tojson|safe }};
         </script>
     {% endif %}

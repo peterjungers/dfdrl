@@ -1,0 +1,153 @@
+{% extends "template.html" %}
+{% set active_page = "about" %}
+
+{% block content %}
+    <div class="row">
+        <div class="col-md-6">
+            <div class="card text-bg-dark mb-4 border-dark shadow">
+                <img class="img-card-top" src="{{ url_for('static', filename='images/vehicles.jpg') }}" alt="Pile of league vehicles on the floor.">
+                <div class="card-body border-secondary border-bottom">
+                    <div class="d-sm-flex gap-1 d-block d-sm-none">
+                        <p class="card-title fs-5 fw-bold mb-0">Damon & Felix</p>
+                        <p class="card-title fs-5 fw-bold">Die-Cast Racing League</p>
+                    </div>
+                    <p class="card-title d-none d-md-block fs-5 fw-bold">Damon & Felix Die-Cast Racing League</p>
+                    <p class="card-text mb-0">Founded 2020</p>
+                </div>
+                <div class="card-body border-secondary border-bottom">
+                    <p class="card-text fw-bold mb-0">Damon & Felix Jungers</p>
+                    <p class="card-text fw-light">Owners, Chairmen, Champions</p>
+                </div>
+                <div class="card-body">
+                    <p class="card-text fst-italic">"Wheels go round and round, that's right: wheels go round and round, alright!"</p>
+                </div>
+            </div>
+
+            <table class="table table-sm bg-dark bg-opacity-25 mb-4 border-bottom border-dark shadow">
+                <thead class="table-dark">
+                    <tr>
+                        <th class="fw-normal" scope="col">Season Information</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td class="fw-light p-2">
+                            <span class="fw-bold">Regular Season</span>—Each season begins with the drafting of 12 vehicles per team—a combination of new and returning vehicles. Additional new vehicles
+                            can be drafted throughout the season based on the discretion of the league board members. There are 12 Regular Season events. The winning vehicle of each event secures a spot
+                            in that season’s Champions League and does not race in any more Regular Season events.
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="fw-light p-2">
+                            <span class="fw-bold">Champions League</span>—There are five Champions League events each season. Each vehicle earns points in each event based on where they finished in that
+                            event: 12 points for first place, through one point for 12th place. At the end of each season’s Champions League, the vehicle with the most points has earned the Champion’s
+                            Cup. Second and Third place are also honored with respective cups.
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="fw-light p-2">
+                            <span class="fw-bold">Champions League Results Tiebreaker</span>—At the conclusion of each season’s Champions League, should any two or more vehicles have the same amount
+                            of points, the tiebreaker belongs to the vehicle with the best finishing spot in any Champions League event. If two or more vehicles have equal best finishing spots, the
+                            tiebreaker belongs to the vehicle that has more than one finish in that spot. If this stipulation is not met, the next best finishing spot for all vehicles is used as the
+                            tiebreaker. Example: Vehicle A, Vehicle B, and Vehicle C have finished the Champions League with the same amount of points. Each vehicle’s best finishing spot across events
+                            was second place. Vehicles A and B finished second twice, while Vehicle C finished second once. Therefore, Vehicles A and B have the tiebreaker over Vehicle C. To
+                            now determine the tiebreaker between Vehicles A and B, their next best finishing spot across events is considered: Vehicle A’s next best finish was third; Vehicle B’s was
+                            fourth. Therefore, Vehicle A has the tiebreaker over Vehicle B.
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <table class="table table-sm bg-dark bg-opacity-25 mb-4 border-bottom border-dark shadow">
+                <thead class="table-dark">
+                    <tr>
+                        <th class="fw-normal" scope="col">Additional Stipulations</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td class="fw-light p-2">
+                            Duplicate vehicles are not allowed in the league: vehicles of the same casting are permissible if the paint detailing is different. Furthermore, any vehicles qualifying under
+                            that stipulation are to be given priority to be drafted by the team holding the previously drafted vehicle of identical casting. Should the team pass on this opportunity, the
+                            new vehicle may be drafted by other teams.
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="fw-light p-2">
+                            Each vehicle on a team must appear in at least one event during the Regular Season.
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="fw-light p-2">
+                            Should any vehicle over the course of the Regular Season or Champions League be unable to race due to vehicle malfunction or otherwise, said vehicle may not be replaced by
+                            any other vehicle either new or from seasons past.
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="fw-light p-2">
+                            Over the course of the Regular Season, should any team have four vehicles win events, vehicles for that team competing in subsequent events will be chosen by opposing team
+                            managers. The result of this stipulation is that less-than-excellent vehicles are often chosen for that team, increasing the chances of more variety of teams in the Champions
+                            League. Qualifying four vehicles for the Champions League is a notable accomplishment for a team, thus being subject to the stipulation can be viewed as an acknowledgement of
+                            racing, and team management, excellence.
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div class="col-md-6">
+            <table class="table table-sm bg-dark bg-opacity-25 mb-4 border-bottom border-dark shadow">
+                <thead class="table-dark">
+                    <tr>
+                        <th class="fw-normal" scope="col">Events</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td class="fw-light p-2">
+                            <span class="fw-bold">Damon</span>—A drag race event between two vehicles at a time, consisting historically of a tournament bracket, but later incorporating a group stage as well. Named in honor of League CEO, Damon Jungers.
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="fw-light p-2">
+                            <span class="fw-bold">Double Double</span>—Nearly identical to a Rowdy (see below), but with one significant difference: rather than each vehicle racing on its own track, four vehicles race on two tracks, with a front and a back row of two vehicles (hence, the vehicles are "doubled" up). Vehicle starting positions are cycled through four races per heat. With the advent of five racing teams in Season 11, the Double Double appears now only as a Champions League event.
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="fw-light p-2">
+                            <span class="fw-bold">Enduro</span>—Vehicles, racing one at a time, earn points based on how far they have traveled down tracks of varying complexity.
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="fw-light p-2">
+                            <span class="fw-bold">Felix</span>—"Bounce Back" is the addendum to the title of this event: vehicles travel one at a time down a track until they hit an elastic barrier, which then propels the vehicle back toward the starting line. The distance a vehicle has "bounced back" is recorded, with subsequent attempts summed at the end of each heat. This event requires attention to the subtleties of speed, as bouncing back too far up the starting ramp can result in significant loss of bounce-back distance, as the vehicle travels again back toward the elastic barrier. Named in honor of League COO, Felix Jungers.
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="fw-light p-2">
+                            <span class="fw-bold">Long Launch</span>—
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="fw-light p-2">
+                            <span class="fw-bold">Open-Trip</span>—
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="fw-light p-2">
+                            <span class="fw-bold">Rowdy</span>—
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="fw-light p-2">
+                            <span class="fw-bold">Spectacle</span>—
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+
+
+{% endblock content %}

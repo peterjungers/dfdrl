@@ -1,14 +1,16 @@
 {% extends "template.html" %}
 {#{% set active_page = "seasons" %}#}
 {% set active_page = "season/" %} {# Used in script.js #}
-{% set number = season_num %}
+{% set season_num = season_num %}
 {% set team = [] %} {# Accessed in script.js using team[0] See below for more info. #}
+{% set season_duration = season_duration %}
 
 {% for row in champion %}
     {% set t = team.append(row.Vehicle.team.name|lower) %} {# Appending to a list is a workaround to obtain team lower name for template.html #}
 {% endfor %}
 
 {% block content %}
+    {{ hi }}
     <div class="row">
         <div class="col-12">
             <div class="row">
@@ -21,7 +23,7 @@
                                 <p class="card-text fs-5 fw-light">Team {{ row.Vehicle.team.name }}</p>
                             </div>
                             <ul class="list-group list-group-flush">
-                                <li class="list-group-item fw-light text-bg-dark">Season {{ number }} Champion</li>
+                                <li class="list-group-item fw-light text-bg-dark">Season {{ season_num }} Champion</li>
                             </ul>
                         </div>
                     {% endfor %}

@@ -34,6 +34,7 @@ def index():
 def season(season_num):
     title = f"Season {season_num}"
 
+    season_duration = get_season_duration(season_num)
     regular_season, champions_league = get_season(season_num)
     # cl stands for Champions League:
     cl_results, champion = get_cl_results(season_num)
@@ -41,6 +42,7 @@ def season(season_num):
     return render_template("season.html",
                            title=title,
                            season_num=season_num,
+                           season_duration=season_duration,
                            regular_season=regular_season,
                            champions_league=champions_league,
                            cl_results=cl_results,
@@ -51,18 +53,23 @@ def season(season_num):
 def vehicles():
     title = "Vehicles"
 
-    # Remember to add Count
-    # headings = ("Vehicle", "Team", "Weight(g)", "First Season",
-    #             "Events", "Champion", "Second", "Third")
-
     league_vehicles = db.session.execute(
                       select(Vehicle).order_by(Vehicle.name)
                       )
 
     return render_template("vehicles.html",
                            title=title,
-                           # headings=headings,
                            league_vehicles=league_vehicles)
+
+
+@main.route("/about")
+def about():
+    title = "About"
+
+    affiliates = get_affiliates()
+
+    return render_template("about.html", title=title,
+                           affiliates=affiliates)
 
 
 def get_team_leaderboard():
@@ -170,78 +177,62 @@ def get_affiliates():
     return affiliates
 
 
+def get_season_duration(season_num):
+    # Gets both Regular Season and Champions League events:
+    racing_season = db.session.execute(
+                    select(Event)
+                    .filter(Event.season_num == season_num)
+                    )
+    dates = []
+    for row in racing_season:
+        dates.append(row.Event.date)
+
+    def get_season_name(year):
+        if (year.month, year.day) < (3, 20):
+            season_name = "Winter"
+        elif (year.month, year.day) < (6, 17):
+            season_name = "Spring"
+        elif (year.month, year.day) < (9, 21):
+            season_name = "Summer"
+        elif (year.month, year.day) < (12, 21):
+            season_name = "Fall"
+        return season_name
+
+    date_start = min(dates)
+    season_name_start = get_season_name(date_start)
+    date_end = max(dates)
+    season_name_end = get_season_name(date_end)
+
+    if (date_start.year == date_end.year
+        and season_name_start == season_name_end):
+        # eg, Summer 2020:
+        season_duration = f"{season_name_start} {date_start.year}"
+    elif date_start.year == date_end.year:
+        # eg, Summer–Fall 2020
+        season_duration = (f"{season_name_start}–"
+                           f"{season_name_end} {date_start.year}")
+    elif date_start.year != date_end.year:
+        # eg, Fall 2020–Winter 2021:
+        season_duration = (f"{season_name_start} {date_start.year}–"
+                           f"{season_name_end} {date_end.year}")
+
+    return season_duration
+
+
 def get_season(season_num):
     def query(boolean):
         q = db.session.execute(
             select(Event, Vehicle)
-            .filter(Event.season_num == season_num,
-                    Event.winner == Vehicle.id,
-                    Event.champions_league == boolean)
-            )
+                .filter(Event.season_num == season_num,
+                        Event.winner == Vehicle.id,
+                        Event.champions_league == boolean)
+        )
         return q
 
     regular_season = query(False)
     champions_league = query(True)
 
-
-
-
-    reg_dates = []
-    for row in regular_season:
-        reg_dates.append(row.Event.date)
-
-    cl_dates = []
-    for row in champions_league:
-        cl_dates.append(row.Event.date)
-
-    def get_season(year):
-        if (year.month, year.day) < (3, 20):
-            season = "Winter"
-        elif (year.month, year.day) < (6, 17):
-            season = "Spring"
-        elif (year.month, year.day) < (9, 21):
-            season = "Summer"
-        elif (year.month, year.day) < (12, 21):
-            season = "Fall"
-
-        return season
-
-    date_start = min(reg_dates)
-    season_start = get_season(date_start)
-    date_end = max(cl_dates)
-    season_end = get_season(date_end)
-
-    if date_start.year == date_end.year and season_start == season_end:
-        season_duraton = f"{season_start} {date_start.year}"
-    elif date_start.year == date_end.year:
-            season_duraton = f"{season_start}–{season_end} {date_start.year}"
-    elif date_start != date_end:
-        season_duraton = f"{season_start} {date_start.year}–{season_end} {date_end.year}"
-
-    print(season_duraton)
-
-
-
-
-
-
     return regular_season, champions_league
-
-
-def get_season_duration(dates):
-    dates = []
-    for row in regular_season:
-        dates.append(row.Event.date)
-
-    for date in dates:
-        if (date.month, date.day) <= (3, 21):
-            season = "Winter"
-        elif (date.month, date.day) <= (6, 21):
-            season = "Spring"
-        elif (date.month, date.day) <= (9, 21):
-            season = "Summer"
-        elif (date.month, date.day) <= (12, 21):
-            season = "Fall"
 
 
 def get_cl_results(season_num):
