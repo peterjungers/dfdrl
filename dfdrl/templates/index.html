@@ -12,8 +12,8 @@
                         <th class="fw-normal" scope="col">Points</th>
                         <th class="d-none d-md-table-cell fw-normal" scope="col">Total Cups</th>
                         <th class="fw-normal" scope="col">Champion</th>
-                        <th class="fw-normal" scope="col">Second</th>
-                        <th class="fw-normal" scope="col">Third</th>
+                        <th class="fw-normal galaxy-fold" scope="col">Second</th>
+                        <th class="fw-normal galaxy-fold" scope="col">Third</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -23,8 +23,8 @@
                             <td class="fw-light">{{ row.points }}</td>
                             <td class="d-none d-md-table-cell fw-light">{{ row.total_cups }}</td>
                             <td class="fw-light">{{ row.team_champion }}</td>
-                            <td class="fw-light">{{ row.team_second }}</td>
-                            <td class="fw-light">{{ row.team_third }}</td>
+                            <td class="fw-light galaxy-fold">{{ row.team_second }}</td>
+                            <td class="fw-light galaxy-fold">{{ row.team_third }}</td>
                         </tr>
                     {% endfor %}
                 </tbody>
@@ -35,18 +35,18 @@
                 <thead class="table-dark">
                 <tr>
                     <th class="fw-normal" scope="col">No.</th>
-                    <th class="fw-normal" scope="col">Champion</th>
-                    <th class="fw-normal" scope="col">Second</th>
-                    <th class="fw-normal" scope="col">Third</th>
+                    <th class="fw-normal col-width" scope="col">Champion</th>
+                    <th class="fw-normal col-width galaxy-fold" scope="col">Second</th>
+                    <th class="fw-normal col-width galaxy-fold" scope="col">Third</th>
                 </tr>
                 </thead>
                 <tbody>
                     {% for row in podium_results %}
                         <tr>
                             <td class="table-dark fw-light text-center align-middle">{{ row["season"] }}</td>
-                            <td class="col-4 border-dark border-end fw-light {{ row['champion']['team']|lower }}">{{ row["champion"]["vehicle"] }}</td>
-                            <td class="col-4 border-dark border-end fw-light {{ row['second']['team']|lower }}">{{ row["second"]["vehicle"] }}</td>
-                            <td class="col-4 fw-light {{ row['third']['team']|lower }}">{{ row["third"]["vehicle"] }}</td>
+                            <td class="border-dark border-end fw-light col-width {{ row['champion']['team']|lower }}">{{ row["champion"]["vehicle"] }}</td>
+                            <td class="border-dark border-end fw-light col-width galaxy-fold {{ row['second']['team']|lower }}">{{ row["second"]["vehicle"] }}</td>
+                            <td class="fw-light col-width galaxy-fold {{ row['third']['team']|lower }}">{{ row["third"]["vehicle"] }}</td>
                         </tr>
                     {% endfor %}
                 </tbody>
@@ -59,8 +59,8 @@
                     <th class="fw-normal" scope="col">Vehicle</th>
                     <th class="d-none d-md-table-cell fw-normal" scope="col">Team</th>
                     <th class="fw-normal" scope="col">Events</th>
-                    <th class="fw-normal" scope="col">CLA</th>
-                    <th class="fw-normal" scope="col">RRE</th>
+                    <th class="fw-normal galaxy-fold" scope="col">CLA</th>
+                    <th class="fw-normal galaxy-fold" scope="col">RRE</th>
                     <th class="fw-normal" scope="col">Points</th>
                     <th class="fw-normal" scope="col">Cups</th>
                 </tr>
@@ -72,8 +72,8 @@
                                 <td class="fw-bold">{{ row.Vehicle.name }}</td>
                                 <td class="d-none d-md-table-cell fw-light">{{ row.Vehicle.team.name }}</td>
                                 <td class="fw-light">{{ row.Vehicle.event_appearances }}</td>
-                                <td class="fw-light">{{ row.cla }}</td>
-                                <td class="fw-light">{{ ("%.3f"|format(row.rre)).lstrip("0") }}</td>
+                                <td class="fw-light galaxy-fold">{{ row.cla }}</td>
+                                <td class="fw-light galaxy-fold">{{ ("%.3f"|format(row.rre)).lstrip("0") }}</td>
                                 <td class="fw-light">{{ row.points }}</td>
                                 <td class="table-dark fw-bold">
                                     {% if row.Vehicle.champion or row.Vehicle.second or row.Vehicle.third %}

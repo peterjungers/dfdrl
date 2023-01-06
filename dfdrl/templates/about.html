@@ -4,8 +4,9 @@
 {% block content %}
     <div class="row">
         <div class="col-md-6">
+            <!-- League info card -->
             <div class="card text-bg-dark mb-4 border-dark shadow">
-                <img class="img-card-top" src="{{ url_for('static', filename='images/vehicles.jpg') }}" alt="Pile of league vehicles on the floor.">
+                <img class="card-img-top" src="{{ url_for('static', filename='images/vehicles.jpg') }}" alt="Pile of league vehicles on the floor.">
                 <div class="card-body border-secondary border-bottom">
                     <div class="d-sm-flex gap-1 d-block d-sm-none">
                         <p class="card-title fs-5 fw-bold mb-0">Damon & Felix</p>
@@ -23,6 +24,7 @@
                 </div>
             </div>
 
+            <!-- Season Information -->
             <table class="table table-sm bg-dark bg-opacity-25 mb-4 border-bottom border-dark shadow">
                 <thead class="table-dark">
                     <tr>
@@ -58,6 +60,7 @@
                 </tbody>
             </table>
 
+            <!-- Additional Stipulations -->
             <table class="table table-sm bg-dark bg-opacity-25 mb-4 border-bottom border-dark shadow">
                 <thead class="table-dark">
                     <tr>
@@ -96,6 +99,7 @@
         </div>
 
         <div class="col-md-6">
+            <!-- Events -->
             <table class="table table-sm bg-dark bg-opacity-25 mb-4 border-bottom border-dark shadow">
                 <thead class="table-dark">
                     <tr>
@@ -125,22 +129,54 @@
                     </tr>
                     <tr>
                         <td class="fw-light p-2">
-                            <span class="fw-bold">Long Launch</span>—
+                            <span class="fw-bold">Long Launch</span>—One vehicle at a time gathers speed and is launched off the track, trying to travel the farthest distance after landing and coming to a stop.
                         </td>
                     </tr>
                     <tr>
                         <td class="fw-light p-2">
-                            <span class="fw-bold">Open-Trip</span>—
+                            <span class="fw-bold">Open-Trip</span>—An amorphous event notable for its triple-track configuration and three-vehicle races. Historically consisting of a small amount of track at the start, which then gives way to an "open" racing area where driving straight becomes a requirement for success. Though the "open" component is implemented with varying degrees of adherence, the triple-track ("trip") configuration is essential.
                         </td>
                     </tr>
                     <tr>
                         <td class="fw-light p-2">
-                            <span class="fw-bold">Rowdy</span>—
+                            <span class="fw-bold">Rowdy</span>—Five vehicles race simultaneously along their own track. Points are awarded each heat based on the farthest distance traveled. With the advent of five racing teams in Season 11, as opposed to four, the rules of the Rowdy have not changed, only the rowdiness has. A quintessential die-cast racing experience.
                         </td>
                     </tr>
                     <tr>
                         <td class="fw-light p-2">
-                            <span class="fw-bold">Spectacle</span>—
+                            <span class="fw-bold">Spectacle</span>—This event appears only as the first event of every Champions League. Usually consisting of all 12 Champions League vehicles racing at once, a variation know unofficially as the "Split Spectacle", where six vehicles race in two initial heats, can also be used.
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <!-- Historical Curiosities -->
+            <table class="table table-sm bg-dark bg-opacity-25 mb-4 border-bottom border-dark shadow">
+                <thead class="table-dark">
+                    <tr>
+                        <th class="fw-normal" scope="col">Historical Curiosities</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td class="fw-light p-2">
+                            In Season 1, if multiple Regular Season events were held on the same day, vehicles that had won an event were allowed to compete in subsequent events that day. Therefore, on June 22nd, 2020, Ice Cream Van completed a "Bifecta" by winning two events on the same day, and hence the need for thirteen Regular Season events that season in order to reach twelve cars for the Champions League. After Season 1, this rule was changed. Winners of an event cannot compete in any further events in the Regular Season, no matter if events are held on the same day. Thus, Ice Cream Van is the only vehicle to ever accomplish this feat.
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="fw-light p-2">
+                            Beginning in Season 6, all teams officially acquired racing affiliates. The original affiliates remain true today for all teams but Team Peter, who parted amicably with Jaguar Racing after Season 9. After spending Season 10 unaffiliated, Team Peter in Season 11 became affiliated with Dinosaur vehicles, as Team Felix, joining the league that season, became affiliated with non-Police Security vehicles.
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="fw-light p-2">
+                            Having reached the league-mandated age of one required for team managers, Felix became in Season 11 the manager of the fifth team in the league: Team Felix. Due to his expanded role as not only a new team manager, but also for having spent his first year on earth as the league's Chief Operating Officer, the Board voted unanimously and without hesitation to rename the league the Damon & Felix Die-Cast Racing League, previously known as the Damon Die-Cast Racing League. One further note, before being known as the DDRL, the league was known in Season 1 simply as the DRL: Damon Racing League. "Die-Cast" was added for further clarification beginning in Season 2.
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="fw-light p-2">
+                            Though not without a valiant effort, as the league expanded, league statisticians were unsuccessful in cataloguing all vehicles that had retired from the league. Retirement is now only noted for Champions League vehicles. Common reasons for retirement are bent axles or a re-evaluation of general vehicle performance capabilities, though some retirement curiosities can be noted: Seasons 8 and 9 were plagued by the phenomenon of vehicles of identical casting and paint detailing being pooled along with the original league-certified vehicles of that casting and paint. Because it was often impossible to tell the original vehicle from the imposters, the original vehicles were mandated to retire. The league Board Members acknowledged that the decision to retire these vehicles was based in no part on the actions of the vehicles themselves, and it regretted the error. Finally, two vehicles from Team Benny: Coors Truck and Ketchup Mustard, while technically being retired after Season 3 due to performance-related issues, were deemed none-the-less
+                            eligible to compete in future events under the "Legends of Racing" historical stipulation, which honors vehicles of significant historical or sentimental value. To date, neither vehicle has exercised their right to return to the track.
                         </td>
                     </tr>
                 </tbody>

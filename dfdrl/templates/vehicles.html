@@ -1,41 +1,62 @@
 {% extends "template.html" %}
 {% set active_page = "vehicles" %}
 {% block content %}
+    <div class="row g-4 mb-4">
+        <div class="col-4">
+            <form>
+                <div class="input-group mb-3">
+                    <input type="text" class="form-control border-dark" placeholder="Find vehicle" aria-label="Find vehicle">
+                    <button id="find-vehicle-btn" class="btn btn-dark" type="button">Search</button>
+                </div>
+            </form>
 
-<table class="table table-sm border-bottom border-dark shadow">
-    <thead class="table-dark">
-        <tr class="sticky-header">
-            <!-- Remember to add Count header -->
-{#            {% for header in headings %}#}
-{#                <th scope="col">{{ header }}</th>#}
-{#            {% endfor %}#}
-            <th class="fw-normal" scope="col">Vehicle</th>
-            <th class="d-none d-md-table-cell fw-normal" scope="col">Team</th>
-            <th class="fw-normal" scope="col">Weight(g)</th>
-            <th class="d-none d-lg-table-cell fw-normal" scope="col">First Season</th>
-            <th class="fw-normal" scope="col">Events</th>
-            <th class="d-none d-sm-table-cell fw-normal" scope="col">Champion</th>
-            <th class="d-none d-md-table-cell fw-normal" scope="col">Second</th>
-            <th class="d-none d-md-table-cell fw-normal" scope="col">Third</th>
-        </tr>
-    </thead>
-    <tbody>
-        {% for row in league_vehicles %}
-            <tr class="{{ row.Vehicle.team.name|lower }}">
-                <td class="fw-bold">{{ row.Vehicle.name }}</td>
-                <td class="d-none d-md-table-cell fw-light">{{ row.Vehicle.team.name }}</td>
-                {% if row.Vehicle.weight %}
-                    <td class="fw-light">{{ row.Vehicle.weight }}</td>
-                {% else %}
-                    <td class="fw-light">Unknown</td>
-                {% endif %}
-                <td class="d-none d-lg-table-cell fw-light">{{ row.Vehicle.first_season }}</td>
-                <td class="fw-light">{{ row.Vehicle.event_appearances }}</td>
-                <td class="d-none d-sm-table-cell fw-light">{{ row.Vehicle.champion }}</td>
-                <td class="d-none d-md-table-cell fw-light">{{ row.Vehicle.second }}</td>
-                <td class="d-none d-md-table-cell fw-light">{{ row.Vehicle.third }}</td>
+            <form class="d-flex gap-2">
+                <select id="team-select" class="form-select border-dark" name="team-select" aria-label="Team select">
+                    <option selected>All teams</option>
+                    <option>Damon</option>
+                    <option>Ian</option>
+                    <option>Benny</option>
+                    <option>Peter</option>
+                </select>
+{#                <button id="team-btn" class="btn btn-dark" type="button">Go</button>#}
+            </form>
+        </div>
+    </div>
+
+
+
+
+    <table id="vehicle-table" class="table table-sm border-bottom border-dark shadow">
+        <thead class="table-dark">
+            <tr class="sticky-header">
+                <th class="fw-normal" scope="col">No.</th>
+                <th class="fw-normal" scope="col">Vehicle</th>
+                <th class="d-none d-md-table-cell fw-normal" scope="col">Team</th>
+                <th class="fw-normal" scope="col">Weight(g)</th>
+                <th class="d-none d-lg-table-cell fw-normal" scope="col">First Season</th>
+                <th class="fw-normal" scope="col">Events</th>
+                <th class="d-none d-sm-table-cell fw-normal" scope="col">Champion</th>
+                <th class="d-none d-md-table-cell fw-normal" scope="col">Second</th>
+                <th class="d-none d-md-table-cell fw-normal" scope="col">Third</th>
             </tr>
-        {% endfor %}
-    </tbody>
-</table>
+        </thead>
+        <tbody>
+            {% for row in league_vehicles %}
+                <tr class="{{ row.Vehicle.team.name|lower }}">
+                    <td class="fw-bold">{{ row.Vehicle.name }}</td>
+                    <td class="d-none d-md-table-cell fw-light">{{ row.Vehicle.team.name }}</td>
+                    {% if row.Vehicle.weight %}
+                        <td class="fw-light">{{ row.Vehicle.weight }}</td>
+                    {% else %}
+                        <td class="fw-light">Unknown</td>
+                    {% endif %}
+                    <td class="d-none d-lg-table-cell fw-light">{{ row.Vehicle.first_season }}</td>
+                    <td class="fw-light">{{ row.Vehicle.event_appearances }}</td>
+                    <td class="d-none d-sm-table-cell fw-light">{{ row.Vehicle.champion }}</td>
+                    <td class="d-none d-md-table-cell fw-light">{{ row.Vehicle.second }}</td>
+                    <td class="d-none d-md-table-cell fw-light">{{ row.Vehicle.third }}</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
 {% endblock content %}

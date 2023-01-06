@@ -153,3 +153,23 @@ td.peter {
 .c-third {
     color: var(--text-white);
 }
+
+/* For Champion, Second, Third columns on podium leaderboard */
+.col-width {
+    width: 32%;
+}
+
+.hidden {
+    display: none;
+}
+
+
+@media screen and (max-width: 320px) {
+    .galaxy-fold {
+        display: none;
+    }
+
+    .col-width {
+        width: 96%;
+    }
+}
