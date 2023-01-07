@@ -57,7 +57,7 @@ function getTeamRows() {
     teamSelect.addEventListener("change", () => {
         let rows = document.querySelectorAll("#vehicle-table tbody tr");
 
-        if (teamSelect.value === "All teams") {
+        if (teamSelect.options.selectedIndex === 0) { // "All teams"
             rows.forEach(row => {
                 if (row.classList.contains("hidden")) {
                     row.classList.remove("hidden");
@@ -65,49 +65,120 @@ function getTeamRows() {
             });
         } else {
             // The selected value to lowercase equals team CSS class:
-            let team = teamSelect.value.toLowerCase();
+            const team = teamSelect.value.toLowerCase();
 
             rows.forEach(row => {
+                // Reset rows for all teams as to be visible:
                 if (row.classList.contains("hidden")) {
                     row.classList.toggle("hidden");
                 }
+                // Hide all rows not containing selected team CSS class:
                 if (!row.classList.contains(`${team}`)) {
                     row.classList.toggle("hidden");
                 }
             });
         }
-
-        addRowCount();
+        addCountColumn();
     });
-
 }
 
 
-// Adds count of vehicles beneath "No." header in table rows at vehicles.html:
-function addRowCount() {
+// Adds count of vehicle row beneath "No." header in table at vehicles.html:
+function addCountColumn() {
     const visibleRows = document.querySelectorAll("#vehicle-table tbody tr:not(.hidden)");
-    const columnAmount = visibleRows[0].cells.length;
+    let count;
 
-    if (columnAmount === 9) {
-        visibleRows.forEach(row => {
-            row.deleteCell(0);
-        });
+    if (visibleRows.length === 0) {
+        count = 0;
+    } else {
+        const columnAmount = visibleRows[0].cells.length;
+
+        if (columnAmount === 9) {
+            visibleRows.forEach(row => {
+                row.deleteCell(0);
+            });
+        }
+
+        count = visibleRows.length;
+        for (let c = 0; c < count; c += 1) {
+            visibleRows[c].insertCell(0).innerText = c + 1;
+        }
     }
 
-    const count = visibleRows.length;
-    for (let c = 0; c < count; c += 1) {
-        visibleRows[c].insertCell(0).innerText = c + 1;
+    showCount(count);
+}
+
+
+function showCount(count) {
+    const vehicleCount = document.querySelector("#vehicle-count");
+
+    if (count === 0) {
+        vehicleCount.innerText = "No results";
+    } else {
+        vehicleCount.innerText = count;
     }
 }
+
+
+function findVehicle() {
+    const findVehicleInput = document.querySelector("#find-vehicle");
+    const findVehicleBtn = document.querySelector("#find-vehicle-btn");
+
+    findVehicleBtn.addEventListener("click", (e) => {
+        e.preventDefault(); // Enter key causes page to reload
+        visibleVehicles = document.querySelectorAll(".vehicle-name");
+
+        visibleVehicles.forEach(cell => {
+            if (cell.parentElement.classList.contains("hidden")) {
+                cell.parentElement.classList.toggle("hidden");
+            }
+
+            if (findVehicleInput.value !== "") {
+                if (cell.innerText.toLowerCase() !== (findVehicleInput.value.toLowerCase())) {
+                    cell.parentElement.classList.toggle("hidden");
+                }
+            }
+        });
+
+        addCountColumn();
+        setTeamSelect();
+    });
+}
+
+
+function clearFindVehicleInput() {
+    const findVehicleInput = document.querySelector("#find-vehicle");
+    const teamSelect = document.querySelector("#t");
+
+    teamSelect.addEventListener("change", () => {
+        findVehicleInput.value = "";
+    });
+}
+
+
+function setTeamSelect() {
+    const teamSelect = document.querySelector("#team-select");
+    const teamName = document.querySelector("#vehicle-table tbody tr:not(.hidden) td.team-name");
+
+    if (teamName) {
+        teamSelect.value = teamName.innerText;
+    }
+}
+
 
 
 if (typeof active_page_season !== "undefined") {
     window.addEventListener("DOMContentLoaded", setTeamClass(active_page_season, team));
 }
 window.addEventListener("DOMContentLoaded", setAriaCurrent());
-window.addEventListener("DOMContentLoaded", getTeamRows());
 
-window.addEventListener("DOMContentLoaded", addRowCount());
+if (document.URL.includes("vehicles")) {
+    window.addEventListener("DOMContentLoaded", addCountColumn());
+    window.addEventListener("DOMContentLoaded", getTeamRows());
+    window.addEventListener("DOMContentLoaded", findVehicle());
+    window.addEventListener("DOMContentLoaded", clearFindVehicleInput());
+}
+
 
 
 

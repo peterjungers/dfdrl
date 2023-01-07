@@ -3,15 +3,8 @@
 {% block content %}
     <div class="row g-4 mb-4">
         <div class="col-4">
-            <form>
-                <div class="input-group mb-3">
-                    <input type="text" class="form-control border-dark" placeholder="Find vehicle" aria-label="Find vehicle">
-                    <button id="find-vehicle-btn" class="btn btn-dark" type="button">Search</button>
-                </div>
-            </form>
-
-            <form class="d-flex gap-2">
-                <select id="team-select" class="form-select border-dark" name="team-select" aria-label="Team select">
+            <form id="t" class="mb-3">
+                <select id="team-select" class="form-select fw-light border-dark" name="team-select" aria-label="Team select">
                     <option selected>All teams</option>
                     <option>Damon</option>
                     <option>Ian</option>
@@ -20,11 +13,17 @@
                 </select>
 {#                <button id="team-btn" class="btn btn-dark" type="button">Go</button>#}
             </form>
+            <form>
+                <div class="input-group mb-3">
+                    <input id="find-vehicle" type="text" class="form-control fw-light border-dark" placeholder="Find vehicle" aria-label="Find vehicle">
+                    <button id="find-vehicle-btn" class="btn btn-dark" type="submit">Search</button>
+                </div>
+            </form>
+            <div>
+                <p class="fw-light mb-0 ps-2">Vehicle count: <span id="vehicle-count" class="fw-bold"></span></p>
+            </div>
         </div>
     </div>
-
-
-
 
     <table id="vehicle-table" class="table table-sm border-bottom border-dark shadow">
         <thead class="table-dark">
@@ -43,8 +42,8 @@
         <tbody>
             {% for row in league_vehicles %}
                 <tr class="{{ row.Vehicle.team.name|lower }}">
-                    <td class="fw-bold">{{ row.Vehicle.name }}</td>
-                    <td class="d-none d-md-table-cell fw-light">{{ row.Vehicle.team.name }}</td>
+                    <td class="fw-bold vehicle-name">{{ row.Vehicle.name }}</td>
+                    <td class="d-none d-md-table-cell fw-light team-name">{{ row.Vehicle.team.name }}</td>
                     {% if row.Vehicle.weight %}
                         <td class="fw-light">{{ row.Vehicle.weight }}</td>
                     {% else %}

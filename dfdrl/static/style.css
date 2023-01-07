@@ -163,6 +163,24 @@ td.peter {
     display: none;
 }
 
+input:focus::placeholder {
+    color: transparent;
+}
+
+.form-control:focus,
+.form-select:focus {
+    box-shadow: 0 0 0 0.25rem rgba(33, 37, 41, 0.25); /* --bs-dark */
+}
+
+.form-control:focus {
+    background-color: rgba(33, 37, 41, 0.05); /* --bs-dark */
+}
+
+
+/*.test {*/
+/*    margin-bottom: 50%;*/
+/*}*/
+
 
 @media screen and (max-width: 320px) {
     .galaxy-fold {
