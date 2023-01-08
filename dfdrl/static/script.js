@@ -52,33 +52,36 @@ function setAriaCurrent() {
 
 
 function getTeamRows() {
-    const teamSelect = document.querySelector("#team-select");
+    const teamSelect = document.querySelectorAll(".team-select");
+    const rows = document.querySelectorAll("#vehicle-table tbody tr");
+    const selectedTeam = document.querySelector("#selected-team");
 
-    teamSelect.addEventListener("change", () => {
-        let rows = document.querySelectorAll("#vehicle-table tbody tr");
+    teamSelect.forEach(teamOption => {
+        teamOption.addEventListener("click", () => {
+            if (teamOption.innerText === "All teams") {
+                rows.forEach(row => {
+                    if (row.classList.contains("hidden")) {
+                        row.classList.remove("hidden");
+                    }
+                });
+            } else {
+                // The selected teamOption to lowercase equals team CSS class:
+                const teamCSS = teamOption.innerText.toLowerCase();
 
-        if (teamSelect.options.selectedIndex === 0) { // "All teams"
-            rows.forEach(row => {
-                if (row.classList.contains("hidden")) {
-                    row.classList.remove("hidden");
-                }
-            });
-        } else {
-            // The selected value to lowercase equals team CSS class:
-            const team = teamSelect.value.toLowerCase();
-
-            rows.forEach(row => {
-                // Reset rows for all teams as to be visible:
-                if (row.classList.contains("hidden")) {
-                    row.classList.toggle("hidden");
-                }
-                // Hide all rows not containing selected team CSS class:
-                if (!row.classList.contains(`${team}`)) {
-                    row.classList.toggle("hidden");
-                }
-            });
-        }
-        addCountColumn();
+                rows.forEach(row => {
+                    // Reset rows for all teams as to be visible:
+                    if (row.classList.contains("hidden")) {
+                        row.classList.toggle("hidden");
+                    }
+                    // Hide all rows not containing selected team CSS class:
+                    if (!row.classList.contains(`${teamCSS}`)) {
+                        row.classList.toggle("hidden");
+                    }
+                });
+            }
+            selectedTeam.innerText = teamOption.innerText;
+            addCountColumn();
+        });
     });
 }
 
@@ -104,7 +107,6 @@ function addCountColumn() {
             visibleRows[c].insertCell(0).innerText = c + 1;
         }
     }
-
     showCount(count);
 }
 
@@ -128,42 +130,52 @@ function findVehicle() {
         e.preventDefault(); // Enter key causes page to reload
         visibleVehicles = document.querySelectorAll(".vehicle-name");
 
-        visibleVehicles.forEach(cell => {
-            if (cell.parentElement.classList.contains("hidden")) {
-                cell.parentElement.classList.toggle("hidden");
-            }
-
-            if (findVehicleInput.value !== "") {
-                if (cell.innerText.toLowerCase() !== (findVehicleInput.value.toLowerCase())) {
+        if (findVehicleInput.value !== "") {
+            visibleVehicles.forEach(cell => {
+                if (cell.parentElement.classList.contains("hidden")) {
                     cell.parentElement.classList.toggle("hidden");
                 }
-            }
-        });
 
-        addCountColumn();
-        setTeamSelect();
+                if (!cell.innerText.toLowerCase().includes(findVehicleInput.value.toLowerCase())) {
+                    cell.parentElement.classList.toggle("hidden");
+                }
+            });
+            addCountColumn();
+        }
     });
 }
+
+
+
 
 
 function clearFindVehicleInput() {
     const findVehicleInput = document.querySelector("#find-vehicle");
-    const teamSelect = document.querySelector("#t");
+    const teamSelect = document.querySelectorAll(".team-select");
 
-    teamSelect.addEventListener("change", () => {
-        findVehicleInput.value = "";
+    teamSelect.forEach(item => {
+        item.addEventListener("click", () => {
+            findVehicleInput.value = "";
+        });
     });
 }
 
 
-function setTeamSelect() {
-    const teamSelect = document.querySelector("#team-select");
-    const teamName = document.querySelector("#vehicle-table tbody tr:not(.hidden) td.team-name");
+// function setSelectedTeam() {
+//     const selectedTeam = document.querySelector("#selected-team");
+//     const teamName = document.querySelectorAll("#vehicle-table tbody tr:not(.hidden) td.team-name");
+//
+//     if (teamName.length === 1) {
+//         selectedTeam.innerText = teamName[0].innerText;
+//     } else {
+//     selectedTeam.innerText = "No results";
+//
+//     }
+// }
 
-    if (teamName) {
-        teamSelect.value = teamName.innerText;
-    }
-}
+
+
+
 
 
 

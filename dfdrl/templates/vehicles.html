@@ -3,20 +3,29 @@
 {% block content %}
     <div class="row g-4 mb-4">
         <div class="col-4">
-            <form id="t" class="mb-3">
-                <select id="team-select" class="form-select fw-light border-dark" name="team-select" aria-label="Team select">
-                    <option selected>All teams</option>
-                    <option>Damon</option>
-                    <option>Ian</option>
-                    <option>Benny</option>
-                    <option>Peter</option>
-                </select>
-{#                <button id="team-btn" class="btn btn-dark" type="button">Go</button>#}
-            </form>
+            <div class="d-flex gap-3 align-items-center">
+                <div id="t" class="dropdown mb-3">
+                    <button class="btn btn-dark border-0 dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        Select Team
+                    </button>
+                    <ul class="dropdown-menu fw-light border-dark">
+                        <li><a class="dropdown-item fw-light team-select btn-all-team" href="#">All teams</a></li>
+                        <li><a class="dropdown-item fw-light team-select btn-damon" href="#">Damon</a></li>
+                        <li><a class="dropdown-item fw-light team-select btn-ian" href="#">Ian</a></li>
+                        <li><a class="dropdown-item fw-light team-select btn-benny" href="#">Benny</a></li>
+                        <li><a class="dropdown-item fw-light team-select btn-peter" href="#">Peter</a></li>
+                    </ul>
+                </div>
+{#                <div>#}
+                    <p class="fw-light hidden">Team: <span id="selected-team" class="fw-bold">All teams</span></p>
+{#                </div>#}
+
+            </div>
+
             <form>
                 <div class="input-group mb-3">
                     <input id="find-vehicle" type="text" class="form-control fw-light border-dark" placeholder="Find vehicle" aria-label="Find vehicle">
-                    <button id="find-vehicle-btn" class="btn btn-dark" type="submit">Search</button>
+                    <button id="find-vehicle-btn" class="btn btn-dark border-0" type="submit">Search</button>
                 </div>
             </form>
             <div>
