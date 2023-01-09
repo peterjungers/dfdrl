@@ -4,8 +4,8 @@
     <div class="row g-4 mb-4">
         <div class="col-4">
             <div class="d-flex gap-3 align-items-center">
-                <div id="t" class="dropdown mb-3">
-                    <button class="btn btn-dark border-0 dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                <div class="dropdown mb-3">
+                    <button id="selected-team-btn" class="btn btn-dark border-0 dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
                         Select Team
                     </button>
                     <ul class="dropdown-menu fw-light border-dark">
@@ -16,10 +16,7 @@
                         <li><a class="dropdown-item fw-light team-select btn-peter" href="#">Peter</a></li>
                     </ul>
                 </div>
-{#                <div>#}
-                    <p class="fw-light hidden">Team: <span id="selected-team" class="fw-bold">All teams</span></p>
-{#                </div>#}
-
+                <p class="fw-light hidden">Team: <span id="show-selected-team" class="fw-bold"></span></p>
             </div>
 
             <form>

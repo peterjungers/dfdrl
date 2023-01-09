@@ -54,7 +54,8 @@ function setAriaCurrent() {
 function getTeamRows() {
     const teamSelect = document.querySelectorAll(".team-select");
     const rows = document.querySelectorAll("#vehicle-table tbody tr");
-    const selectedTeam = document.querySelector("#selected-team");
+    let team;
+    let teamCSS;
 
     teamSelect.forEach(teamOption => {
         teamOption.addEventListener("click", () => {
@@ -64,9 +65,10 @@ function getTeamRows() {
                         row.classList.remove("hidden");
                     }
                 });
+                teamCSS = "";
             } else {
                 // The selected teamOption to lowercase equals team CSS class:
-                const teamCSS = teamOption.innerText.toLowerCase();
+                teamCSS = teamOption.innerText.toLowerCase();
 
                 rows.forEach(row => {
                     // Reset rows for all teams as to be visible:
@@ -79,7 +81,8 @@ function getTeamRows() {
                     }
                 });
             }
-            selectedTeam.innerText = teamOption.innerText;
+            team = teamOption.innerText;
+            setSelectedTeam(teamCSS, team);
             addCountColumn();
         });
     });
@@ -132,12 +135,27 @@ function findVehicle() {
 
         if (findVehicleInput.value !== "") {
             visibleVehicles.forEach(cell => {
-                if (cell.parentElement.classList.contains("hidden")) {
-                    cell.parentElement.classList.toggle("hidden");
-                }
+                // This "teamCSS" variable is trying to establish who row belongs to in order to hide or show it later—keep trying!
+                let teamCSS = cell.parentElement.classList[0];
+                console.log(teamCSS);
+                // if (cell.parentElement.classList.contains("hidden")) {
+                //     cell.parentElement.classList.toggle("hidden");
+                // }
 
                 if (!cell.innerText.toLowerCase().includes(findVehicleInput.value.toLowerCase())) {
-                    cell.parentElement.classList.toggle("hidden");
+                    if (!cell.parentElement.classList.contains("hidden")) {
+                        cell.parentElement.classList.toggle("hidden");
+                    }
+                    // else if (cell.parentElement.classList.contains("hidden")) {
+                    //     cell.parentElement.classList.toggle("hidden");
+                    // }
+
+
+                    // console.log(cell.innerText);
+                    // else if (cell.innerText.toLowerCase().includes(findVehicleInput.value.toLowerCase())) {
+                    //     cell.parentElement.classList.toggle("hidden");
+                    // }
+                    // cell.parentElement.classList.toggle("hidden");
                 }
             });
             addCountColumn();
@@ -161,17 +179,86 @@ function clearFindVehicleInput() {
 }
 
 
-// function setSelectedTeam() {
-//     const selectedTeam = document.querySelector("#selected-team");
-//     const teamName = document.querySelectorAll("#vehicle-table tbody tr:not(.hidden) td.team-name");
-//
-//     if (teamName.length === 1) {
-//         selectedTeam.innerText = teamName[0].innerText;
-//     } else {
-//     selectedTeam.innerText = "No results";
-//
-//     }
-// }
+function setSelectedTeam(teamCSS, team) {
+    const selectedTeamBtn = document.querySelector("#selected-team-btn");
+    const showSelectedTeam = document.querySelector("#show-selected-team");
+
+    // https://stackoverflow.com/questions/54190763/if-classlist-contains-more-than-one-specific-class
+    // const teamCSSClasses = ["damon", "felix", "ian", "benny", "peter"];
+    // if (teamCSSClasses.some(teamCSSClass => selectedTeamBtn.classList.contains(teamCSSClass))) {
+    //     console.log(teamCSSClasses);
+    //     selectedTeamBtn.classList.remove(`${teamCSSClass}`);
+    // }
+
+
+    if (selectedTeamBtn.classList.contains("damon")) {
+        selectedTeamBtn.classList.remove("damon");
+    } else if (selectedTeamBtn.classList.contains("felix")) {
+        selectedTeamBtn.classList.remove("felix");
+    } else if (selectedTeamBtn.classList.contains("ian")) {
+        selectedTeamBtn.classList.remove("ian");
+    } else if (selectedTeamBtn.classList.contains("benny")) {
+        selectedTeamBtn.classList.remove("benny");
+    } else if (selectedTeamBtn.classList.contains("peter")) {
+        selectedTeamBtn.classList.remove("peter");
+    }
+
+    if (teamCSS !== "") {
+        selectedTeamBtn.classList.add(`${teamCSS}`);
+    }
+
+    if (showSelectedTeam.parentElement.classList.contains("hidden")) {
+        showSelectedTeam.parentElement.classList.toggle("hidden");
+    }
+
+    showSelectedTeam.innerHTML = team;
+
+
+    // if (teamCSS !== "hi") {
+
+    // } else {
+    //     selectedTeamBtn.classList.remove(`${teamCSS}`);
+    // }
+
+
+    // const teamSelect = document.querySelectorAll(".team-select");
+    //
+    // teamSelect.forEach(teamOption => {
+    //     teamOption.addEventListener("click", () => {
+    //         if (teamOption.innerText === "Ian") {
+    //             teamCSS = "ian";
+    //         }
+    //         selectedTeam.classList.add(`ian`);
+    //         console.log(teamOption.innerText);
+    //     });
+    // });
+
+
+
+
+
+
+    // const rows = document.querySelectorAll("#vehicle-table tbody tr");
+    // let teamCSS;
+
+    // rows.forEach(row => {
+    //     if (!row.classList.contains("hidden")) {
+    //         teamCSS = row.className;
+    //         console.log(teamCSS);
+    //     }
+    // });
+    //
+    // if (teamCSS) {
+    //     selectedTeam.classList.add(`${teamCSS}`);
+    // }
+
+    // if (teamName.length === 1) {
+    //     selectedTeam.innerText = teamName[0].innerText;
+    // } else {
+    // selectedTeam.innerText = "No results";
+    //
+    // }
+}
 
 
 
@@ -188,7 +275,7 @@ if (document.URL.includes("vehicles")) {
     window.addEventListener("DOMContentLoaded", addCountColumn());
     window.addEventListener("DOMContentLoaded", getTeamRows());
     window.addEventListener("DOMContentLoaded", findVehicle());
-    window.addEventListener("DOMContentLoaded", clearFindVehicleInput());
+    // window.addEventListener("DOMContentLoaded", clearFindVehicleInput());
 }
 
 
