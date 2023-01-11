@@ -65,7 +65,7 @@ function getTeamRows() {
                         row.classList.remove("hidden");
                     }
                 });
-                teamCSS = "";
+                teamCSS = "btn-other"; // Default, non-team, button styles
             } else {
                 // The selected teamOption to lowercase equals team CSS class:
                 teamCSS = teamOption.innerText.toLowerCase();
@@ -132,8 +132,6 @@ function findVehicle() {
     const vehicleTableRows = document.querySelectorAll("#vehicle-table tbody tr");
     const vehicleNames = document.querySelectorAll(".vehicle-name");
     let teamCSS;
-
-
 
     findVehicleBtn.addEventListener("click", (e) => {
         e.preventDefault(); // Enter key causes page to reload
@@ -212,42 +210,18 @@ function setSelectedTeam(teamCSS, team) {
     const findVehicleBtn = document.querySelector("#find-vehicle-btn")
     const showSelectedTeam = document.querySelector("#show-selected-team");
 
-    // https://stackoverflow.com/questions/54190763/if-classlist-contains-more-than-one-specific-class
-    // const teamCSSClasses = ["damon", "felix", "ian", "benny", "peter"];
-    // if (teamCSSClasses.some(teamCSSClass => selectedTeamBtn.classList.contains(teamCSSClass))) {
-    //     console.log(teamCSSClasses);
-    //     selectedTeamBtn.classList.remove(`${teamCSSClass}`);
-    // }
+    const teamCSSClasses = ["btn-other", "damon", "felix", "ian", "benny", "peter"];
+    teamCSSClasses.forEach(teamClass => {
+        if (selectedTeamBtn.classList.contains(teamClass)) {
+            selectedTeamBtn.classList.remove(teamClass);
+        }
+        if (findVehicleBtn.classList.contains(teamClass)) {
+            findVehicleBtn.classList.remove(teamClass);
+        }
+    })
 
-
-    if (selectedTeamBtn.classList.contains("damon")) {
-        selectedTeamBtn.classList.remove("damon");
-    } else if (selectedTeamBtn.classList.contains("felix")) {
-        selectedTeamBtn.classList.remove("felix");
-    } else if (selectedTeamBtn.classList.contains("ian")) {
-        selectedTeamBtn.classList.remove("ian");
-    } else if (selectedTeamBtn.classList.contains("benny")) {
-        selectedTeamBtn.classList.remove("benny");
-    } else if (selectedTeamBtn.classList.contains("peter")) {
-        selectedTeamBtn.classList.remove("peter");
-    }
-
-    if (findVehicleBtn.classList.contains("damon")) {
-        findVehicleBtn.classList.remove("damon");
-    } else if (findVehicleBtn.classList.contains("felix")) {
-        findVehicleBtn.classList.remove("felix");
-    } else if (findVehicleBtn.classList.contains("ian")) {
-        findVehicleBtn.classList.remove("ian");
-    } else if (findVehicleBtn.classList.contains("benny")) {
-        findVehicleBtn.classList.remove("benny");
-    } else if (findVehicleBtn.classList.contains("peter")) {
-        findVehicleBtn.classList.remove("peter");
-    }
-
-    if (teamCSS !== "") {
-        selectedTeamBtn.classList.add(`${teamCSS}`);
-        findVehicleBtn.classList.add(`${teamCSS}`);
-    }
+    selectedTeamBtn.classList.add(`${teamCSS}`);
+    findVehicleBtn.classList.add(`${teamCSS}`);
 
     showSelectedTeam.innerHTML = team;
 }

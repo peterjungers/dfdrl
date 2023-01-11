@@ -122,10 +122,12 @@ td.peter {
 
 
 /* || For dropdown items and search buttons at vehicles.html */
-.item-all-team:hover,
-.item-all-team:focus,
-#selected-team-btn,
-#find-vehicle-btn {
+.item-other:hover,
+.item-other:focus,
+.btn-other:hover,
+.btn-other:focus,
+.btn-dark.btn-other:active,
+.btn.show.btn-other {
     background-color: var(--bs-dark);
     color: white;
 }
@@ -134,7 +136,8 @@ td.peter {
 .item-damon:focus,
 .btn-dark.damon:hover,
 .btn-dark.damon:focus,
-.btn-dark.damon:active {
+.btn-dark.damon:active,
+.btn.show.damon {
     background-color: var(--damon);
 }
 
@@ -142,7 +145,8 @@ td.peter {
 .item-felix:focus,
 .btn-dark.felix:hover,
 .btn-dark.felix:focus,
-.btn-dark.felix:active {
+.btn-dark.felix:active,
+.btn.show.felix {
     background-color: var(--felix);
 }
 
@@ -150,7 +154,8 @@ td.peter {
 .item-ian:focus,
 .btn-dark.ian:hover,
 .btn-dark.ian:focus,
-.btn-dark.ian:active {
+.btn-dark.ian:active,
+.btn.show.ian {
     background-color: var(--ian);
 }
 
@@ -158,7 +163,8 @@ td.peter {
 .item-benny:focus,
 .btn-dark.benny:hover,
 .btn-dark.benny:focus,
-.btn-dark.benny:active {
+.btn-dark.benny:active,
+.btn.show.benny {
     background-color: var(--benny);
 }
 
@@ -166,13 +172,14 @@ td.peter {
 .item-peter:focus,
 .btn-dark.peter:hover,
 .btn-dark.peter:focus,
-.btn-dark.peter:active {
+.btn-dark.peter:active,
+.btn.show.peter {
     background-color: var(--peter);
 }
 
 .item-damon:active,
 .btn-dark.damon,
-.btn-dark.damon:active,
+.dropdown > .btn-dark.damon:active,
 .item-felix:active,
 .btn-dark.felix,
 .btn-dark.felix:active,
@@ -186,6 +193,14 @@ td.peter {
 .btn-dark.peter,
 .btn-dark.peter:active {
     color: var(--bs-dark);
+}
+
+.dropdown-menu.dropdown-seasons {
+    min-width: 60px;
+}
+
+input {
+    max-width: 300px;
 }
 
 /*.btn-dark.damon:hover,*/
