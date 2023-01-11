@@ -126,45 +126,73 @@ function showCount(count) {
 
 
 function findVehicle() {
-    const findVehicleInput = document.querySelector("#find-vehicle");
     const findVehicleBtn = document.querySelector("#find-vehicle-btn");
+    const findVehicleInput = document.querySelector("#find-vehicle");
+    const selectedTeamBtn = document.querySelector("#selected-team-btn");
+    const vehicleTableRows = document.querySelectorAll("#vehicle-table tbody tr");
+    const vehicleNames = document.querySelectorAll(".vehicle-name");
+    let teamCSS;
+
+
 
     findVehicleBtn.addEventListener("click", (e) => {
         e.preventDefault(); // Enter key causes page to reload
-        visibleVehicles = document.querySelectorAll(".vehicle-name");
+
+        if (selectedTeamBtn.classList.contains("damon")) {
+            teamCSS = "damon";
+        } else if (selectedTeamBtn.classList.contains("felix")) {
+            teamCSS = "felix";
+        } else if (selectedTeamBtn.classList.contains("ian")) {
+            teamCSS = "ian";
+        } else if (selectedTeamBtn.classList.contains("benny")) {
+            teamCSS = "benny";
+        } else if (selectedTeamBtn.classList.contains("peter")) {
+            teamCSS = "peter";
+        } else {
+            // For "All teams" search:
+            teamCSS = "";
+        }
 
         if (findVehicleInput.value !== "") {
-            visibleVehicles.forEach(cell => {
-                // This "teamCSS" variable is trying to establish who row belongs to in order to hide or show it later—keep trying!
-                let teamCSS = cell.parentElement.classList[0];
-                console.log(teamCSS);
-                // if (cell.parentElement.classList.contains("hidden")) {
-                //     cell.parentElement.classList.toggle("hidden");
-                // }
+            if (selectedTeamBtn.classList.contains(teamCSS)) {
+                /* Reset team rows to visible in order to
+                search all vehicles of selected team: */
+                vehicleTableRows.forEach(row => {
+                    if (row.classList.contains(teamCSS)) {
+                        if (row.classList.contains("hidden")) {
+                            row.classList.toggle("hidden");
+                        }
+                    }
+                });
 
-                if (!cell.innerText.toLowerCase().includes(findVehicleInput.value.toLowerCase())) {
-                    if (!cell.parentElement.classList.contains("hidden")) {
+                /* For vehicles belonging to selected team,
+                hide row (the cell's parent element) if vehicle name
+                in table row doesn't match search input field: */
+                vehicleNames.forEach(cell => {
+                    if (cell.parentElement.classList.contains(teamCSS)) {
+                        if (!cell.innerText.toLowerCase().includes(findVehicleInput.value.toLowerCase())) {
+                            cell.parentElement.classList.toggle("hidden");
+                        }
+                    }
+                });
+            } else {
+                // "All teams" search:
+                vehicleTableRows.forEach(row => {
+                    if (row.classList.contains("hidden")) {
+                        row.classList.toggle("hidden");
+                    }
+                });
+
+                vehicleNames.forEach(cell => {
+                    if (!cell.innerText.toLowerCase().includes(findVehicleInput.value.toLowerCase())) {
                         cell.parentElement.classList.toggle("hidden");
                     }
-                    // else if (cell.parentElement.classList.contains("hidden")) {
-                    //     cell.parentElement.classList.toggle("hidden");
-                    // }
-
-
-                    // console.log(cell.innerText);
-                    // else if (cell.innerText.toLowerCase().includes(findVehicleInput.value.toLowerCase())) {
-                    //     cell.parentElement.classList.toggle("hidden");
-                    // }
-                    // cell.parentElement.classList.toggle("hidden");
-                }
-            });
+                });
+            }
             addCountColumn();
         }
     });
 }
-
-
-
 
 
 function clearFindVehicleInput() {
@@ -181,6 +209,7 @@ function clearFindVehicleInput() {
 
 function setSelectedTeam(teamCSS, team) {
     const selectedTeamBtn = document.querySelector("#selected-team-btn");
+    const findVehicleBtn = document.querySelector("#find-vehicle-btn")
     const showSelectedTeam = document.querySelector("#show-selected-team");
 
     // https://stackoverflow.com/questions/54190763/if-classlist-contains-more-than-one-specific-class
@@ -203,67 +232,25 @@ function setSelectedTeam(teamCSS, team) {
         selectedTeamBtn.classList.remove("peter");
     }
 
-    if (teamCSS !== "") {
-        selectedTeamBtn.classList.add(`${teamCSS}`);
+    if (findVehicleBtn.classList.contains("damon")) {
+        findVehicleBtn.classList.remove("damon");
+    } else if (findVehicleBtn.classList.contains("felix")) {
+        findVehicleBtn.classList.remove("felix");
+    } else if (findVehicleBtn.classList.contains("ian")) {
+        findVehicleBtn.classList.remove("ian");
+    } else if (findVehicleBtn.classList.contains("benny")) {
+        findVehicleBtn.classList.remove("benny");
+    } else if (findVehicleBtn.classList.contains("peter")) {
+        findVehicleBtn.classList.remove("peter");
     }
 
-    if (showSelectedTeam.parentElement.classList.contains("hidden")) {
-        showSelectedTeam.parentElement.classList.toggle("hidden");
+    if (teamCSS !== "") {
+        selectedTeamBtn.classList.add(`${teamCSS}`);
+        findVehicleBtn.classList.add(`${teamCSS}`);
     }
 
     showSelectedTeam.innerHTML = team;
-
-
-    // if (teamCSS !== "hi") {
-
-    // } else {
-    //     selectedTeamBtn.classList.remove(`${teamCSS}`);
-    // }
-
-
-    // const teamSelect = document.querySelectorAll(".team-select");
-    //
-    // teamSelect.forEach(teamOption => {
-    //     teamOption.addEventListener("click", () => {
-    //         if (teamOption.innerText === "Ian") {
-    //             teamCSS = "ian";
-    //         }
-    //         selectedTeam.classList.add(`ian`);
-    //         console.log(teamOption.innerText);
-    //     });
-    // });
-
-
-
-
-
-
-    // const rows = document.querySelectorAll("#vehicle-table tbody tr");
-    // let teamCSS;
-
-    // rows.forEach(row => {
-    //     if (!row.classList.contains("hidden")) {
-    //         teamCSS = row.className;
-    //         console.log(teamCSS);
-    //     }
-    // });
-    //
-    // if (teamCSS) {
-    //     selectedTeam.classList.add(`${teamCSS}`);
-    // }
-
-    // if (teamName.length === 1) {
-    //     selectedTeam.innerText = teamName[0].innerText;
-    // } else {
-    // selectedTeam.innerText = "No results";
-    //
-    // }
 }
-
-
-
-
-
 
 
 if (typeof active_page_season !== "undefined") {
@@ -277,11 +264,3 @@ if (document.URL.includes("vehicles")) {
     window.addEventListener("DOMContentLoaded", findVehicle());
     // window.addEventListener("DOMContentLoaded", clearFindVehicleInput());
 }
-
-
-
-
-// const teams = document.querySelector("#team-btn")
-// teams.addEventListener("click", () => {
-//     getTeamRows()
-// });

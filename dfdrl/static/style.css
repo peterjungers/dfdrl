@@ -8,6 +8,7 @@
 }
 
 
+/* || Navbar */
 .navbar a:focus-visible {
     outline: none;
     text-decoration: underline;
@@ -28,23 +29,14 @@
     box-shadow: inset 0 3px 5px rgba(0, 0, 0, 0.125);
 }
 
-
-
-/*.dropdown-menu {*/
-/*    max-height: 155px;*/
-/*    overflow-y: auto;*/
-/*}*/
-
-/*.dropdown-item:active {*/
-/*    background-color: #2c3034;*/
-/*}*/
-
 .nav-item ul.dropdown-menu > li {
     display: inline-block;
     width: 4.25rem;
 }
 
-/* || Team background colors */
+
+/* || Team background colors used in data tables throughout site;
+td prefix necessary for podium leaderboard table at index.html */
 .damon,
 td.damon {
     background-color: var(--damon);
@@ -79,56 +71,128 @@ td.peter {
 }
 
 
-/* || Team buttons */
-.btn-all-team:hover {
-    background-color: var(--bs-dark-bg-subtle);
-}
-
-.btn-damon:hover {
+/* || Team buttons in navbar dropdown and season sidebar at template.html */
+.btn-damon:hover,
+.btn-damon:focus,
+.btn-dark.btn-damon:active {
     background-color: var(--damon);
 }
 
-.btn-felix:hover {
+.btn-felix:hover,
+.btn-felix:focus,
+.btn-dark.btn-felix:active {
     background-color: var(--felix);
 }
 
-.btn-ian:hover {
+.btn-ian:hover,
+.btn-ian:focus,
+.btn-dark.btn-ian:active {
     background-color: var(--ian);
 }
 
-.btn-benny:hover {
+.btn-benny:hover,
+.btn-benny:focus,
+.btn-dark.btn-benny:active {
     background-color: var(--benny);
 }
 
-.btn-peter:hover {
+.btn-peter:hover,
+.btn-peter:focus,
+.btn-dark.btn-peter:active {
     background-color: var(--peter);
 }
 
-.btn-all-team:hover,
 .btn-damon:hover,
+.btn-damon:focus,
+.btn-dark.btn-damon:active,
 .btn-felix:hover,
+.btn-felix:focus,
+.btn-dark.btn-felix:active,
 .btn-ian:hover,
+.btn-ian:focus,
+.btn-dark.btn-ian:active,
 .btn-benny:hover,
-.btn-peter:hover {
+.btn-benny:focus,
+.btn-dark.btn-benny:active,
+.btn-peter:hover,
+.btn-peter:focus,
+.btn-dark.btn-peter:active {
     color: var(--bs-dark);
 }
 
-.btn-dark.btn-damon:active,
-.btn-dark.btn-felix:active,
-.btn-dark.btn-ian:active,
-.btn-dark.btn-benny:active,
-.btn-dark.btn-peter:active {
-    background-color: var(--bs-btn-bg);
-    color: var(--bs-btn-color);
+
+/* || For dropdown items and search buttons at vehicles.html */
+.item-all-team:hover,
+.item-all-team:focus,
+#selected-team-btn,
+#find-vehicle-btn {
+    background-color: var(--bs-dark);
+    color: white;
 }
 
-.btn-dark:focus {
-    background-color: var(--bs-btn-bg);
+.item-damon:hover,
+.item-damon:focus,
+.btn-dark.damon:hover,
+.btn-dark.damon:focus,
+.btn-dark.damon:active {
+    background-color: var(--damon);
 }
 
-.btn-dark.disabled {
-    opacity: 1;
+.item-felix:hover,
+.item-felix:focus,
+.btn-dark.felix:hover,
+.btn-dark.felix:focus,
+.btn-dark.felix:active {
+    background-color: var(--felix);
 }
+
+.item-ian:hover,
+.item-ian:focus,
+.btn-dark.ian:hover,
+.btn-dark.ian:focus,
+.btn-dark.ian:active {
+    background-color: var(--ian);
+}
+
+.item-benny:hover,
+.item-benny:focus,
+.btn-dark.benny:hover,
+.btn-dark.benny:focus,
+.btn-dark.benny:active {
+    background-color: var(--benny);
+}
+
+.item-peter:hover,
+.item-peter:focus,
+.btn-dark.peter:hover,
+.btn-dark.peter:focus,
+.btn-dark.peter:active {
+    background-color: var(--peter);
+}
+
+.item-damon:active,
+.btn-dark.damon,
+.btn-dark.damon:active,
+.item-felix:active,
+.btn-dark.felix,
+.btn-dark.felix:active,
+.item-ian:active,
+.btn-dark.ian,
+.btn-dark.ian:active,
+.item-benny:active,
+.btn-dark.benny,
+.btn-dark.benny:active,
+.item-peter:active,
+.btn-dark.peter,
+.btn-dark.peter:active {
+    color: var(--bs-dark);
+}
+
+/*.btn-dark.damon:hover,*/
+/*.dropdown > .btn-dark:active,*/
+/*.btn-dark:focus {*/
+/*    background-color: var(--bs-btn-bg);*/
+/*}*/
 
 
 .sticky-header {
@@ -140,10 +204,6 @@ td.peter {
 /*    position: sticky;*/
 /*    top: 88px;*/
 /*}*/
-
-.bg-dropdown {
-    background-color: #c5c6c8;
-}
 
 
 /* Stylized C for Cups column in Vehicle Leaderboard table */
@@ -180,11 +240,6 @@ input:focus::placeholder {
 .form-control:focus {
     background-color: rgba(33, 37, 41, 0.05); /* --bs-dark */
 }
-
-
-/*.test {*/
-/*    margin-bottom: 50%;*/
-/*}*/
 
 
 @media screen and (max-width: 320px) {
