@@ -51,6 +51,42 @@ function setAriaCurrent() {
 }
 
 
+// Adds count of vehicle row beneath "No." header in table at vehicles.html:
+function addCountColumn() {
+    const visibleRows = document.querySelectorAll("#vehicle-table tbody tr:not(.hidden)");
+    let count;
+
+    if (visibleRows.length === 0) {
+        count = 0;
+    } else {
+        const columnAmount = visibleRows[0].cells.length;
+
+        if (columnAmount === 10) {
+            visibleRows.forEach(row => {
+                row.deleteCell(0);
+            });
+        }
+
+        count = visibleRows.length;
+        for (let c = 0; c < count; c += 1) {
+            visibleRows[c].insertCell(0).innerText = c + 1;
+        }
+    }
+    showCount(count);
+}
+
+
+function showCount(count) {
+    const vehicleCount = document.querySelector("#vehicle-count");
+
+    if (count === 0) {
+        vehicleCount.innerText = "No results";
+    } else {
+        vehicleCount.innerText = count;
+    }
+}
+
+
 function getTeamRows() {
     const teamSelect = document.querySelectorAll(".team-select");
     const rows = document.querySelectorAll("#vehicle-table tbody tr");
@@ -89,80 +125,21 @@ function getTeamRows() {
 }
 
 
-// Adds count of vehicle row beneath "No." header in table at vehicles.html:
-function addCountColumn() {
-    const visibleRows = document.querySelectorAll("#vehicle-table tbody tr:not(.hidden)");
-    let count;
-
-    if (visibleRows.length === 0) {
-        count = 0;
-    } else {
-        const columnAmount = visibleRows[0].cells.length;
-
-        if (columnAmount === 9) {
-            visibleRows.forEach(row => {
-                row.deleteCell(0);
-            });
-        }
-
-        count = visibleRows.length;
-        for (let c = 0; c < count; c += 1) {
-            visibleRows[c].insertCell(0).innerText = c + 1;
-        }
-    }
-    showCount(count);
-}
-
-
-function showCount(count) {
-    const vehicleCount = document.querySelector("#vehicle-count");
-
-    if (count === 0) {
-        vehicleCount.innerText = "No results";
-    } else {
-        vehicleCount.innerText = count;
-    }
-}
-
-
 function findVehicle() {
     const findVehicleBtn = document.querySelector("#find-vehicle-btn");
     const findVehicleInput = document.querySelector("#find-vehicle");
     const selectedTeamBtn = document.querySelector("#selected-team-btn");
-    const vehicleTableRows = document.querySelectorAll("#vehicle-table tbody tr");
     const vehicleNames = document.querySelectorAll(".vehicle-name");
     let teamCSS;
 
     findVehicleBtn.addEventListener("click", (e) => {
-        e.preventDefault(); // Enter key causes page to reload
+        e.preventDefault(); // Without this, Enter key causes page to reload
 
-        if (selectedTeamBtn.classList.contains("damon")) {
-            teamCSS = "damon";
-        } else if (selectedTeamBtn.classList.contains("felix")) {
-            teamCSS = "felix";
-        } else if (selectedTeamBtn.classList.contains("ian")) {
-            teamCSS = "ian";
-        } else if (selectedTeamBtn.classList.contains("benny")) {
-            teamCSS = "benny";
-        } else if (selectedTeamBtn.classList.contains("peter")) {
-            teamCSS = "peter";
-        } else {
-            // For "All teams" search:
-            teamCSS = "";
-        }
+        teamCSS = getTeamCSS(selectedTeamBtn);
 
         if (findVehicleInput.value !== "") {
             if (selectedTeamBtn.classList.contains(teamCSS)) {
-                /* Reset team rows to visible in order to
-                search all vehicles of selected team: */
-                vehicleTableRows.forEach(row => {
-                    if (row.classList.contains(teamCSS)) {
-                        if (row.classList.contains("hidden")) {
-                            row.classList.toggle("hidden");
-                        }
-                    }
-                });
-
+                resetTeamRows(teamCSS);
                 /* For vehicles belonging to selected team,
                 hide row (the cell's parent element) if vehicle name
                 in table row doesn't match search input field: */
@@ -174,13 +151,8 @@ function findVehicle() {
                     }
                 });
             } else {
+                resetAllRows();
                 // "All teams" search:
-                vehicleTableRows.forEach(row => {
-                    if (row.classList.contains("hidden")) {
-                        row.classList.toggle("hidden");
-                    }
-                });
-
                 vehicleNames.forEach(cell => {
                     if (!cell.innerText.toLowerCase().includes(findVehicleInput.value.toLowerCase())) {
                         cell.parentElement.classList.toggle("hidden");
@@ -193,18 +165,119 @@ function findVehicle() {
 }
 
 
-function clearFindVehicleInput() {
-    const findVehicleInput = document.querySelector("#find-vehicle");
-    const teamSelect = document.querySelectorAll(".team-select");
+function orderByWeight() {
+    const weightBtn = document.querySelector("#weight-btn");
+    const vehicleTable = document.querySelector("#vehicle-table");
+    let switching = true;
 
-    teamSelect.forEach(item => {
-        item.addEventListener("click", () => {
-            findVehicleInput.value = "";
-        });
+    weightBtn.addEventListener("click", () => {
+        // Run loop until no switching is needed
+        while (switching) {
+            switching = false;
+            var rows = vehicleTable.rows;
+
+            // Loop to go through all rows
+            for (i = 1; i < rows.length - 1; i++) {
+                var Switch = false;
+                let dontSwitch = false;
+
+                // Fetch 2 elements that need to be compared
+                x = rows[i].getElementsByTagName("td")[3];
+                y = rows[i + 1].getElementsByTagName("td")[3];
+
+                // Check if 2 rows need to be switched
+                if (x.innerHTML !== "Unknown") {
+                    if (x.innerHTML < y.innerHTML) {
+
+                        // If yes, mark Switch as needed and break loop
+                        Switch = true;
+                        break;
+                    }
+                }
+
+            }
+            if (Switch) {
+                // Function to switch rows and mark switch as completed
+                rows[i].parentNode.insertBefore(rows[i + 1], rows[i]);
+                switching = true;
+            } else {
+                rows[i].parentNode.insertBefore(rows[i], rows[i + 1]);
+                switching = true;
+            }
+        }
+        addCountColumn();
     });
 }
 
 
+// function championsLeagueVehicle() {
+//     const clVehiclesBtn = document.querySelector("#cl-vehicles-btn");
+//     const vehicleTableRows = document.querySelectorAll("#vehicle-table tbody tr");
+//     const cla = document.querySelectorAll(".cla");
+//
+//     clVehiclesBtn.addEventListener("click", () => {
+//         cla.forEach(cell => {
+//             if (cell.innerText === "0") {
+//                 cell.parentElement.classList.toggle("hidden");
+//             }
+//         });
+//         addCountColumn();
+//     });
+// }
+
+
+function getTeamCSS(button) {
+    if (button.classList.contains("damon")) {
+        teamCSS = "damon";
+    } else if (button.classList.contains("felix")) {
+        teamCSS = "felix";
+    } else if (button.classList.contains("ian")) {
+        teamCSS = "ian";
+    } else if (button.classList.contains("benny")) {
+        teamCSS = "benny";
+    } else if (button.classList.contains("peter")) {
+        teamCSS = "peter";
+    } else {
+        // For "All teams" search:
+        teamCSS = "";
+    }
+
+    return teamCSS;
+}
+
+
+/*
+For a selected team, reset all team rows to visible
+in order to do new search of all vehicles of selected team:
+*/
+function resetTeamRows(teamCSS) {
+    vehicleTableRows = document.querySelectorAll("#vehicle-table tbody tr");
+
+    vehicleTableRows.forEach(row => {
+        if (row.classList.contains(teamCSS)) {
+            if (row.classList.contains("hidden")) {
+                row.classList.toggle("hidden");
+            }
+        }
+    });
+}
+
+
+function resetAllRows() {
+    vehicleTableRows = document.querySelectorAll("#vehicle-table tbody tr");
+
+    vehicleTableRows.forEach(row => {
+        if (row.classList.contains("hidden")) {
+            row.classList.toggle("hidden");
+        }
+    });
+}
+
+
+/*
+Sets all button background colors to team CSS
+and shows selected team text:
+*/
 function setSelectedTeam(teamCSS, team) {
     const selectedTeamBtn = document.querySelector("#selected-team-btn");
     const findVehicleBtn = document.querySelector("#find-vehicle-btn")
@@ -218,7 +291,7 @@ function setSelectedTeam(teamCSS, team) {
         if (findVehicleBtn.classList.contains(teamClass)) {
             findVehicleBtn.classList.remove(teamClass);
         }
-    })
+    });
 
     selectedTeamBtn.classList.add(`${teamCSS}`);
     findVehicleBtn.classList.add(`${teamCSS}`);
@@ -227,14 +300,17 @@ function setSelectedTeam(teamCSS, team) {
 }
 
 
+// Sitewide
 if (typeof active_page_season !== "undefined") {
     window.addEventListener("DOMContentLoaded", setTeamClass(active_page_season, team));
 }
 window.addEventListener("DOMContentLoaded", setAriaCurrent());
 
+// vehicles.html
 if (document.URL.includes("vehicles")) {
     window.addEventListener("DOMContentLoaded", addCountColumn());
     window.addEventListener("DOMContentLoaded", getTeamRows());
     window.addEventListener("DOMContentLoaded", findVehicle());
-    // window.addEventListener("DOMContentLoaded", clearFindVehicleInput());
+    window.addEventListener("DOMContentLoaded", orderByWeight());
+    // window.addEventListener("DOMContentLoaded", championsLeagueVehicle());
 }

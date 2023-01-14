@@ -52,9 +52,15 @@ def season(season_num):
 @main.route("/vehicles")
 def vehicles():
     title = "Vehicles"
+    # Count of all Champions League Appearances (CLA):
+    cla = func.count(ChampionsLeagueResult.vehicle).label("cla")
+
 
     league_vehicles = db.session.execute(
-                      select(Vehicle).order_by(Vehicle.name)
+                      select(Vehicle, cla)
+                      .outerjoin(ChampionsLeagueResult)
+                      .group_by(Vehicle.id)
+                      .order_by(Vehicle.name)
                       )
 
     return render_template("vehicles.html",

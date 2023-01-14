@@ -179,7 +179,7 @@ td.peter {
 
 .item-damon:active,
 .btn-dark.damon,
-.dropdown > .btn-dark.damon:active,
+.btn-dark.damon:active,
 .item-felix:active,
 .btn-dark.felix,
 .btn-dark.felix:active,
@@ -260,6 +260,10 @@ input:focus::placeholder {
 @media screen and (max-width: 320px) {
     .galaxy-fold {
         display: none;
+    }
+
+    .wrap {
+        flex-wrap: wrap;
     }
 
     .col-width {

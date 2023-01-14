@@ -22,7 +22,7 @@
             </div>
 
             <!-- Vehicle search -->
-            <form> <!-- Form tag allows Enter key usage -->
+            <form> {# Form tag allows Enter key usage for input text field #}
                 <div class="input-group">
                     <input id="find-vehicle" type="text" class="form-control fw-light border-dark" placeholder="Find vehicle" aria-label="Find vehicle">
                     <button id="find-vehicle-btn" class="btn btn-dark border-0 btn-other" type="submit">Search</button>
@@ -31,12 +31,12 @@
         </div>
 
         <div class="col-lg-8 col-md-7 col-sm-12">
-            <div class="d-flex gap-3 mb-3">
-
-                <button class="btn btn-dark border-0 btn-other">Weight</button>
-
+            <div class="d-flex gap-3 mb-3 wrap">
+                <!-- Weight search -->
+                <button id="weight-btn" class="btn btn-dark border-0 btn-other">Weight</button>
+                <!-- First Season search -->
                 <div class="dropdown">
-                    <button class="btn btn-dark border-0 dropdown-toggle btn-other" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                    <button id="first-season-btn" class="btn btn-dark border-0 dropdown-toggle btn-other" type="button" data-bs-toggle="dropdown" aria-expanded="false">
                         First Season
                     </button>
                     <ul class="dropdown-menu dropdown-menu-end fw-light border-dark dropdown-seasons">
@@ -52,15 +52,21 @@
                         <li><a class="dropdown-item fw-light text-center item-other" href="#">1</a></li>
                     </ul>
                 </div>
-
-                <button class="btn btn-dark border-0 btn-other">Events</button>
+                <!-- Events search -->
+                <button id="events-btn" class="btn btn-dark border-0 btn-other">Events</button>
             </div>
 
-            <div class="d-flex gap-3">
-                <button class="btn btn-dark border-0 btn-other">Champions League Vehicles</button>
-                <button class="btn btn-dark border-0 btn-other"><span class="fw-bold c-champion">C</span></button>
-                <button class="btn btn-dark border-0 btn-other"><span class="fw-bold c-second">C</span></button>
-                <button class="btn btn-dark border-0 btn-other"><span class="fw-bold c-third">C</span></button>
+            <div class="d-flex flex-column flex-sm-row gap-3">
+                <!-- Champions League Vehicles search -->
+                <div>
+                    <button id="cl-vehicles-btn" class="btn btn-dark border-0 btn-other">Champions League Vehicles</button>
+                </div>
+                <!-- Champion, Second, Third searches -->
+                <div class="d-flex gap-3">
+                    <button id="champion-btn" class="btn btn-dark border-0 btn-other"><span class="fw-bold c-champion">C</span></button>
+                    <button id="second-btn" class="btn btn-dark border-0 btn-other"><span class="fw-bold c-second">C</span></button>
+                    <button id="third-btn" class="btn btn-dark border-0 btn-other"><span class="fw-bold c-third">C</span></button>
+                </div>
             </div>
         </div>
     </div>
@@ -77,12 +83,13 @@
                 <th class="fw-normal" scope="col">No.</th>
                 <th class="fw-normal" scope="col">Vehicle</th>
                 <th class="d-none d-md-table-cell fw-normal" scope="col">Team</th>
-                <th class="fw-normal" scope="col">Weight(g)</th>
+                <th class="fw-normal galaxy-fold" scope="col">Weight(g)</th>
                 <th class="d-none d-lg-table-cell fw-normal" scope="col">First Season</th>
-                <th class="fw-normal" scope="col">Events</th>
-                <th class="d-none d-sm-table-cell fw-normal" scope="col">Champion</th>
-                <th class="d-none d-md-table-cell fw-normal" scope="col">Second</th>
-                <th class="d-none d-md-table-cell fw-normal" scope="col">Third</th>
+                <th class="fw-normal galaxy-fold" scope="col">Events</th>
+                <th class="d-none d-sm-table-cell fw-normal galaxy-fold" scope="col">CLA</th>
+                <th class="d-none d-lg-table-cell fw-bold c-champion" scope="col">C</th>
+                <th class="d-none d-lg-table-cell fw-bold c-second" scope="col">C</th>
+                <th class="d-none d-lg-table-cell fw-bold c-third" scope="col">C</th>
             </tr>
         </thead>
         <tbody>
@@ -91,15 +98,16 @@
                     <td class="fw-bold vehicle-name">{{ row.Vehicle.name }}</td>
                     <td class="d-none d-md-table-cell fw-light team-name">{{ row.Vehicle.team.name }}</td>
                     {% if row.Vehicle.weight %}
-                        <td class="fw-light">{{ row.Vehicle.weight }}</td>
+                        <td class="fw-light galaxy-fold">{{ row.Vehicle.weight }}</td>
                     {% else %}
-                        <td class="fw-light">Unknown</td>
+                        <td class="fw-light galaxy-fold">Unknown</td>
                     {% endif %}
                     <td class="d-none d-lg-table-cell fw-light">{{ row.Vehicle.first_season }}</td>
-                    <td class="fw-light">{{ row.Vehicle.event_appearances }}</td>
-                    <td class="d-none d-sm-table-cell fw-light">{{ row.Vehicle.champion }}</td>
-                    <td class="d-none d-md-table-cell fw-light">{{ row.Vehicle.second }}</td>
-                    <td class="d-none d-md-table-cell fw-light">{{ row.Vehicle.third }}</td>
+                    <td class="fw-light galaxy-fold">{{ row.Vehicle.event_appearances }}</td>
+                    <td class="d-none d-sm-table-cell fw-light cla">{{ row.cla }}</td>
+                    <td class="d-none d-lg-table-cell fw-light">{{ row.Vehicle.champion }}</td>
+                    <td class="d-none d-lg-table-cell fw-light">{{ row.Vehicle.second }}</td>
+                    <td class="d-none d-lg-table-cell fw-light">{{ row.Vehicle.third }}</td>
                 </tr>
             {% endfor %}
         </tbody>
