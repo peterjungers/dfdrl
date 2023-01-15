@@ -1,10 +1,7 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
+{% extends "template.html" %}
 
-</body>
-</html>
+{% block error %}
+    <div>
+        <h3>Error 404: Page does not exist</h3>
+    </div>
+{% endblock error %}

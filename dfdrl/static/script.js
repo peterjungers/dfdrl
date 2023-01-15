@@ -1,3 +1,14 @@
+/*
+JavaScript functions for DFDRL website
+Author: Peter Jungers
+Date: December 2022/January 2023
+ */
+
+
+// One function specific to season pages:
+
+
+// Adds team CSS class to season links of respective team:
 function setTeamClass(active_page_season, team) {
     const seasons = [10, 9, 8, 7, 6, 5, 4, 3, 2, 1];
 
@@ -7,37 +18,37 @@ function setTeamClass(active_page_season, team) {
         /* Adding index number (i.e., team[0]) is a workaround in Jinja2;
         see seasons.html for more info. */
         instances.forEach(instance => {
-            if ("season/" + season_num === active_page_season
-                && team[0] === "damon") {
-                instance.classList.add("damon");
-            } else if ("season/" + season_num === active_page_season
-                && team[0] === "felix") {
-                instance.classList.add("felix");
-            } else if ("season/" + season_num === active_page_season
-                && team[0] === "ian") {
-                instance.classList.add("ian");
-            } else if ("season/" + season_num === active_page_season
-                && team[0] === "benny") {
-                instance.classList.add("benny");
-            } else if ("season/" + season_num === active_page_season
-                && team[0] === "peter") {
-                instance.classList.add("peter");
+            if ("season/" + season_num === active_page_season) {
+                if (team[0] === "damon") {
+                    instance.classList.add("damon");
+                } else if (team[0] === "felix") {
+                    instance.classList.add("felix");
+                } else if (team[0] === "ian") {
+                    instance.classList.add("ian");
+                } else if (team[0] === "benny") {
+                    instance.classList.add("benny");
+                } else if (team[0] === "peter") {
+                    instance.classList.add("peter");
+                }
             }
         });
     });
 }
 
 
+// One sitewide function, but relies on setTeamClass() for season links:
+
+
 function setAriaCurrent() {
-    /* Sets aria-current for active navbar link. Active dropdown link
-    in navbar should not be aria-current, rather, active link within
-    the dropdown should be (as set below). */
+    /* Sets aria-current for active navbar link. Active
+    dropdown toggle link in navbar should not be aria-current,
+    rather, active link within the dropdown should be (as set below): */
     a = document.querySelector(".nav-link.active");
     if (!a.classList.contains("dropdown-toggle")) {
         a.setAttribute("aria-current", "page");
     }
 
-    /* Season links within dropdown menu and sidebar */
+    /* Season links within navbar dropdown menu and sidebar: */
     instances = document.querySelectorAll("a.btn");
     instances.forEach(instance => {
         if (instance.classList.contains("damon")
@@ -51,9 +62,13 @@ function setAriaCurrent() {
 }
 
 
+// The remaining functions are specific to vehicles.html:
+
+
 // Adds count of vehicle row beneath "No." header in table at vehicles.html:
 function addCountColumn() {
-    const visibleRows = document.querySelectorAll("#vehicle-table tbody tr:not(.hidden)");
+    const visibleRows = document.querySelectorAll(
+        "#vehicle-table tbody tr:not(.hidden)");
     let count;
 
     if (visibleRows.length === 0) {
@@ -87,12 +102,14 @@ function showCount(count) {
 }
 
 
+
+// Set all table rows to selected team using "Select Team" button dropdown:
 function getTeamRows() {
-    const teamSelect = document.querySelectorAll(".team-select");
+    const teamSelectDropdown = document.querySelectorAll(".team-select");
     let teamCSS;
     let team;
 
-    teamSelect.forEach(teamOption => {
+    teamSelectDropdown.forEach(teamOption => {
         teamOption.addEventListener("click", () => {
             if (teamOption.innerText === "All teams") {
                 resetAllRows();
@@ -111,10 +128,12 @@ function getTeamRows() {
 }
 
 
+
+// Search for vehicle specified in text input field:
 function findVehicle() {
+    const selectedTeamBtn = document.querySelector("#selected-team-btn");
     const findVehicleBtn = document.querySelector("#find-vehicle-btn");
     const findVehicleInput = document.querySelector("#find-vehicle");
-    const selectedTeamBtn = document.querySelector("#selected-team-btn");
     const vehicleNames = document.querySelectorAll(".vehicle-name");
     let teamCSS;
 
@@ -131,7 +150,8 @@ function findVehicle() {
                 in table row doesn't match search input field: */
                 vehicleNames.forEach(cell => {
                     if (cell.parentElement.classList.contains(teamCSS)) {
-                        if (!cell.innerText.toLowerCase().includes(findVehicleInput.value.toLowerCase())) {
+                        if (!cell.innerText.toLowerCase().includes(
+                                findVehicleInput.value.toLowerCase())) {
                             cell.parentElement.classList.toggle("hidden");
                         }
                     }
@@ -140,7 +160,8 @@ function findVehicle() {
                 resetAllRows();
                 // "All teams" search:
                 vehicleNames.forEach(cell => {
-                    if (!cell.innerText.toLowerCase().includes(findVehicleInput.value.toLowerCase())) {
+                    if (!cell.innerText.toLowerCase().includes(
+                            findVehicleInput.value.toLowerCase())) {
                         cell.parentElement.classList.toggle("hidden");
                     }
                 });
@@ -151,36 +172,40 @@ function findVehicle() {
 }
 
 
+/*
+Finds all vehicles, or all specified team vehicles,
+whose first season is the season specified in "First Season" dropdown:
+ */
 function firstSeason() {
-    const seasonSelect = document.querySelectorAll(".season-select");
+    const seasonSelectDropdown = document.querySelectorAll(".season-select");
+    const selectedTeamBtn = document.querySelector("#selected-team-btn");
     const firstSeason = document.querySelectorAll(".first-season");
-    // let season;
     let teamCSS;
-    let team;
 
-    seasonSelect.forEach(seasonOption => {
+    seasonSelectDropdown.forEach(seasonOption => {
         seasonOption.addEventListener("click", () => {
             let seasonNum = seasonOption.innerText;
-            resetAllRows();
-            console.log(seasonNum);
-            firstSeason.forEach(season => {
-                console.log(season.innerText);
-                if (season.innerText !== seasonNum) {
-                    season.parentElement.classList.toggle("hidden");
-                }
-            })
+            teamCSS = getTeamCSS(selectedTeamBtn);
 
-            // if (seasonOption.innerText === "All teams") {
-            //     resetAllRows();
-            //     teamCSS = "btn-other"; // Default, non-team, button styles
-            // } else {
-            //     // The selected teamOption to lowercase equals team CSS class:
-            //     teamCSS = teamOption.innerText.toLowerCase();
-            //     resetTeamRows(teamCSS);
-            // }
-            //
-            // team = teamOption.innerText;
-            // setSelectedTeam(teamCSS, team);
+            if (selectedTeamBtn.classList.contains(teamCSS)) {
+                resetTeamRows(teamCSS);
+                // Individual team search:
+                firstSeason.forEach(season => {
+                    if (season.parentElement.classList.contains(teamCSS)) {
+                        if (season.innerText !== seasonNum) {
+                            season.parentElement.classList.toggle("hidden");
+                        }
+                    }
+                });
+            } else {
+                resetAllRows();
+                // "All teams" search:
+                firstSeason.forEach(season => {
+                    if (season.innerText !== seasonNum) {
+                        season.parentElement.classList.toggle("hidden");
+                    }
+                });
+            }
             addCountColumn();
         });
     });
@@ -188,13 +213,14 @@ function firstSeason() {
 
 
 /*
-Used for four buttons: all Champions League vehicles, all champions,
-all second place finishers, and all third place finishers. Used for all teams
-or individual team searches.
+Used for four buttons: "Champions League Vehicles", champion "C",
+second place "C", and third place "C"; for all teams
+or specified individual team searches:
  */
 function championsLeagueOptions() {
     const selectedTeamBtn = document.querySelector("#selected-team-btn");
-    const championsLeagueVehiclesBtn = document.querySelector("#cl-vehicles-btn");
+    const championsLeagueVehiclesBtn =
+        document.querySelector("#cl-vehicles-btn");
     const championBtn = document.querySelector("#champion-btn");
     const secondBtn = document.querySelector("#second-btn");
     const thirdBtn = document.querySelector("#third-btn");
@@ -203,7 +229,8 @@ function championsLeagueOptions() {
     const second = document.querySelectorAll(".second");
     const third = document.querySelectorAll(".third");
 
-    championsLeagueVehiclesBtn.addEventListener("click", () => getRows(championsLeagueVehicles));
+    championsLeagueVehiclesBtn.addEventListener(
+        "click", () => getRows(championsLeagueVehicles));
     championBtn.addEventListener("click", () => getRows(champion));
     secondBtn.addEventListener("click", () => getRows(second));
     thirdBtn.addEventListener("click", () => getRows(third));
@@ -251,15 +278,14 @@ function getTeamCSS(button) {
         // For "All teams" search:
         teamCSS = "";
     }
-
     return teamCSS;
 }
 
 
 /*
 For a selected team, reset all team rows to visible
-in order to do new search of all vehicles of selected team.
-Hide all rows of other teams:
+in order to do new search of all vehicles of selected team;
+hide all rows of other teams:
 */
 function resetTeamRows(teamCSS) {
     vehicleTableRows = document.querySelectorAll("#vehicle-table tbody tr");
@@ -275,7 +301,7 @@ function resetTeamRows(teamCSS) {
     });
 }
 
-
+// Resets table to original table:
 function resetAllRows() {
     vehicleTableRows = document.querySelectorAll("#vehicle-table tbody tr");
 
@@ -288,17 +314,21 @@ function resetAllRows() {
 
 
 /*
-Sets all button background colors to team CSS
+Sets all button and "First Season" dropdown background colors to team CSS
 and shows selected team text:
 */
 function setSelectedTeam(teamCSS, team) {
     const selectedTeamBtn = document.querySelector("#selected-team-btn");
     const findVehicleBtn = document.querySelector("#find-vehicle-btn")
+    const firstSeasonBtn = document.querySelector("#first-season-btn");
+    const championsLeagueVehiclesBtn =
+        document.querySelector("#cl-vehicles-btn");
+    const seasonSelectDropdown = document.querySelectorAll(".season-select");
     const showSelectedTeam = document.querySelector("#show-selected-team");
-    // Season btn
-    const championsLeagueVehiclesBtn = document.querySelector("#cl-vehicles-btn");
 
-    const teamCSSClasses = ["btn-other", "damon", "felix", "ian", "benny", "peter"];
+    // Remove any set class from buttons:
+    const teamCSSClasses =
+        ["btn-other", "damon", "felix", "ian", "benny", "peter"];
     teamCSSClasses.forEach(teamCSSClass => {
         if (selectedTeamBtn.classList.contains(teamCSSClass)) {
             selectedTeamBtn.classList.remove(teamCSSClass);
@@ -306,28 +336,51 @@ function setSelectedTeam(teamCSS, team) {
         if (findVehicleBtn.classList.contains(teamCSSClass)) {
             findVehicleBtn.classList.remove(teamCSSClass);
         }
-        //
         if (championsLeagueVehiclesBtn.classList.contains(teamCSSClass)) {
             championsLeagueVehiclesBtn.classList.remove(teamCSSClass);
         }
+        if (firstSeasonBtn.classList.contains(teamCSSClass)) {
+            firstSeasonBtn.classList.remove(teamCSSClass);
+        }
     });
 
+    // Remove any set class from "First Season" dropdown items:
+    let teamItemCSS = "item-" + teamCSS;
+    const seasonOptionCSS =
+        ["item-other", "item-damon", "item-felix",
+            "item-ian", "item-benny", "item-peter"];
+    seasonOptionCSS.forEach(CSSOption => {
+        seasonSelectDropdown.forEach(seasonOption => {
+            if (seasonOption.classList.contains(CSSOption)) {
+                seasonOption.classList.remove(CSSOption);
+            }
+        });
+    });
+
+    // Set selected team class for all elements:
     selectedTeamBtn.classList.add(teamCSS);
     findVehicleBtn.classList.add(teamCSS);
-    //
+    firstSeasonBtn.classList.add(teamCSS);
     championsLeagueVehiclesBtn.classList.add(teamCSS);
+    seasonSelectDropdown.forEach(seasonOption => {
+        seasonOption.classList.add(teamItemCSS);
+    });
 
+    // Set team text:
     showSelectedTeam.innerHTML = team;
 }
 
 
-// Sitewide
+// For season pages:
 if (typeof active_page_season !== "undefined") {
-    window.addEventListener("DOMContentLoaded", setTeamClass(active_page_season, team));
+    window.addEventListener(
+        "DOMContentLoaded", setTeamClass(active_page_season, team));
 }
+
+// For sitewide navbar links, but also reliant on setTeamClass():
 window.addEventListener("DOMContentLoaded", setAriaCurrent());
 
-// vehicles.html
+// For vehicles.html:
 if (document.URL.includes("vehicles")) {
     window.addEventListener("DOMContentLoaded", addCountColumn());
     window.addEventListener("DOMContentLoaded", getTeamRows());

@@ -1,3 +1,11 @@
+/*
+Custom CSS styles for DFDRL website
+Author: Peter Jungers
+Date: December 2022/January 2023
+ */
+
+
+/* || GENERAL SITEWIDE */
 
 :root {
     --damon: #6fa8dc;
@@ -7,15 +15,37 @@
     --peter: #93c47d;
 }
 
+#site-container {
+    min-height: 100vh;
+}
 
-/* || Navbar */
+.hidden {
+    display: none;
+}
+
+/* || Input text field and form-control */
+input:focus::placeholder {
+    color: transparent;
+}
+
+.form-control:focus,
+.form-select:focus {
+    box-shadow: 0 0 0 0.25rem rgba(66, 70, 73, 0.5); /* var(--bs-btn-focus-shadow-rgb) */
+}
+
+.form-control:focus {
+    background-color: rgba(33, 37, 41, 0.05); /* --bs-dark */
+}
+
+
+/* || NAVBAR */
 .navbar a:focus-visible {
     outline: none;
     text-decoration: underline;
     text-underline-offset: 4px;
 }
 
-.dropdown-menu a:focus {
+.nav-item .dropdown-menu a:focus {
     text-decoration: none;
 }
 
@@ -25,18 +55,22 @@
 }
 
 .navbar-toggler:focus-visible {
-    outline: 4px solid #868688;
+    outline: 4px solid #868688; /* Matches color of other Bootstrap dark focus borders */
     box-shadow: inset 0 3px 5px rgba(0, 0, 0, 0.125);
 }
 
-.nav-item ul.dropdown-menu > li {
+.nav-item li {
     display: inline-block;
     width: 4.25rem;
 }
 
 
-/* || Team background colors used in data tables throughout site;
-td prefix necessary for podium leaderboard table at index.html */
+/* || TEAM CLASSES */
+
+/*
+|| Team background colors used in data tables throughout site;
+td prefix necessary for podium leaderboard table at index.html
+*/
 .damon,
 td.damon {
     background-color: var(--damon);
@@ -69,7 +103,6 @@ td.peter {
 .peter {
     color: var(--bs-dark);
 }
-
 
 /* || Team buttons in navbar dropdown and season sidebar at template.html */
 .btn-damon:hover,
@@ -119,7 +152,6 @@ td.peter {
 .btn-dark.btn-peter:active {
     color: var(--bs-dark);
 }
-
 
 /* || For dropdown items and search buttons at vehicles.html */
 .item-other:hover,
@@ -195,33 +227,20 @@ td.peter {
     color: var(--bs-dark);
 }
 
+
+/* MISCELLANEOUS STYLES */
+
 .dropdown-menu.dropdown-seasons {
     min-width: 60px;
 }
 
-/*#find-vehicle {*/
-/*    max-width: 300px;*/
-/*}*/
-
-/*.btn-dark.damon:hover,*/
-/*.dropdown > .btn-dark:active,*/
-/*.btn-dark:focus {*/
-/*    background-color: var(--bs-btn-bg);*/
-/*}*/
-
-
-.sticky-header {
-    position: sticky;
-    top: 56px;
+/* Dropdown list items */
+.team-select:focus,
+.season-select:focus {
+    outline-color: #868688; /* Matches color of other Bootstrap dark focus borders */
 }
 
-/*.sticky-seasons {*/
-/*    position: sticky;*/
-/*    top: 88px;*/
-/*}*/
-
-
-/* Stylized C for Cups column in Vehicle Leaderboard table */
+/* Stylized C for Champions League cups */
 .c-champion {
     color: var(--damon);
 }
@@ -239,26 +258,10 @@ td.peter {
     width: 32%;
 }
 
-.hidden {
-    display: none;
-}
 
-input:focus::placeholder {
-    color: transparent;
-}
-
-.form-control:focus,
-.form-select:focus {
-    box-shadow: 0 0 0 0.25rem rgba(66, 70, 73, 0.5); /* var(--bs-btn-focus-shadow-rgb) */
-}
-
-.form-control:focus {
-    background-color: rgba(33, 37, 41, 0.05); /* --bs-dark */
-}
-
-
+/* || GALAXY FOLD VIEWPORT */
 @media screen and (max-width: 320px) {
-    .galaxy-fold {
+    .galaxy-hide {
         display: none;
     }
 

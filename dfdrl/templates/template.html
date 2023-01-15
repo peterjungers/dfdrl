@@ -1,12 +1,21 @@
+{#
+Author: Peter Jungers
+Date: December 2022/January 2023
+#}
+
 {% import "macros.html" as macros %}
 
 <!DOCTYPE html>
 <html lang="en">
 <head>
-{#    <link rel="icon" href="data:;base64,iVBORw0KGgo="> For favicon error in Chrome #}
     <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="Leaderboards and statistics for the Damon & Felix Die-Cast Racing League.">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="shortcut icon" href="{{ url_for('static', filename='images/favicon.ico') }}">
+    <link rel="icon" type="image/png" sizes="32x32" href="{{ url_for('static', filename='images/favicon-32.png') }}">
+    <link rel="icon" type="image/png" sizes="32x32" href="{{ url_for('static', filename='images/favicon-32x32.png') }}">
+    <link rel="apple-touch-icon" sizes="180x180" href="{{ url_for('static', filename='images/apple-touch-icon.png') }}">
+    <link rel="icon" sizes="192x192" href="{{ url_for('static', filename='images/android-chrome-192.png') }}">
     <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
@@ -18,94 +27,94 @@
     {% endif %}
 </head>
 <body class="bg-dark">
-<div class="bg-light-subtle pb-4">
-    <header class="sticky-top shadow">
-        <!-- Navbar -->
-        <nav class="navbar navbar-expand-xl navbar-dark bg-dark">
-            <div class="container">
-                <!-- Brand -->
-                <a class="navbar-brand" href="/">DFDRL</a>
+    <div id="site-container" class="bg-light-subtle pb-4">
+        <header class="sticky-top shadow">
+            <!-- Navbar -->
+            <nav class="navbar navbar-expand-xl navbar-dark bg-dark">
+                <div class="container">
+                    <!-- Brand -->
+                    <a class="navbar-brand" href="/">DFDRL</a>
 
-                <!-- Hamburger -->
-                <button class="navbar-toggler border-0" type="button" data-bs-toggle="collapse" data-bs-target="#nav-menu" aria-controls="nav-menu" aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
+                    <!-- Hamburger -->
+                    <button class="navbar-toggler border-0" type="button" data-bs-toggle="collapse" data-bs-target="#nav-menu" aria-controls="nav-menu" aria-expanded="false" aria-label="Toggle navigation">
+                        <span class="navbar-toggler-icon"></span>
+                    </button>
 
-                <!-- Nav menu -->
-                <div class="collapse navbar-collapse" id="nav-menu">
-                    <ul class="navbar-nav ms-auto mb-2">
-                        <li class="nav-item">
-                            <a class="nav-link {{ macros.set_class_active(active_page, 'leaderboards') }}" href="{{ url_for('main.index') }}">Leaderboards</a>
-                        </li>
-                        <li class="nav-item dropdown d-xl-none">
-                            <a class="nav-link dropdown-toggle {% if season_num %}{{ macros.set_class_active(active_page + season_num, 'season/' + season_num) }}{% endif %}"
-                               role="button" data-bs-toggle="dropdown" aria-expanded="false"
-                               href="#">Seasons</a>
-                            <ul class="dropdown-menu border-0 p-2">
-                                <li class="m-2"><a class="btn btn-dark border-0 w-100 fw-bold btn-benny team-active-10" role="button" href="{{ url_for('main.season', season_num='10') }}">10</a>
-                                <li class="m-2"><a class="btn btn-dark border-0 w-100 fw-bold btn-damon team-active-9" role="button" href="{{  url_for('main.season', season_num='9') }}">9</a>
-                                <li class="m-2"><a class="btn btn-dark border-0 w-100 fw-bold btn-benny team-active-8" role="button" href="{{ url_for('main.season', season_num='8') }}">8</a>
-                                <li class="m-2"><a class="btn btn-dark border-0 w-100 fw-bold btn-ian team-active-7" role="button" href="{{ url_for('main.season', season_num='7') }}">7</a>
-                                <li class="m-2"><a class="btn btn-dark border-0 w-100 fw-bold btn-damon team-active-6" role="button" href="{{ url_for('main.season', season_num='6') }}">6</a>
-                                <li class="m-2"><a class="btn btn-dark border-0 w-100 fw-bold btn-peter team-active-5" role="button" href="{{ url_for('main.season', season_num='5') }}">5</a>
-                                <li class="m-2"><a class="btn btn-dark border-0 w-100 fw-bold btn-damon team-active-4" role="button" href="{{ url_for('main.season', season_num='4') }}">4</a>
-                                <li class="m-2"><a class="btn btn-dark border-0 w-100 fw-bold btn-damon team-active-3" role="button" href="{{ url_for('main.season', season_num='3') }}">3</a>
-                                <li class="m-2"><a class="btn btn-dark border-0 w-100 fw-bold btn-damon team-active-2" role="button" href="{{ url_for('main.season', season_num='2') }}">2</a>
-                                <li class="m-2"><a class="btn btn-dark border-0 w-100 fw-bold btn-damon team-active-1" role="button" href="{{ url_for('main.season', season_num='1') }}">1</a>
-                            </ul>
-                        </li>
-                        <li class="nav-item">
-                             <a class="nav-link {{ macros.set_class_active(active_page, 'vehicles') }}" href="{{ url_for('main.vehicles') }}">Vehicles</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link {{ macros.set_class_active(active_page, 'about') }}" href="{{ url_for('main.about') }}">About</a>
-                        </li>
-                    </ul>
-                </div>
-            </div>
-        </nav>
-    </header>
-
-    <main class="container mt-4">
-        <div class="row">
-            <!-- Main content -->
-            <div class="col-xl-11 col-lg-12">
-                <div class="d-md-flex gap-0 column-gap-3 mb-3">
-                    <h1 class="d-none d-lg-block fs-5 fw-bold">Damon & Felix Die-Cast Racing League</h1>
-                    <div class="d-flex gap-0 column-gap-3">
-                        <p class="h2 d-none d-lg-block fs-5 fw-light ">//</p>
-                        <h2 class="fs-5 fw-normal">{{ title }}</h2>
-                        {% if season_duration %}
-                            <p class="h2 d-none d-sm-block fs-5 fw-light">//</p>
-                            <h2 class="d-none d-sm-block fs-5 fw-light">{{ season_duration }}</h2>
-                        {% endif %}
+                    <!-- Nav menu -->
+                    <div class="collapse navbar-collapse" id="nav-menu">
+                        <ul class="navbar-nav ms-auto mb-2">
+                            <li class="nav-item">
+                                <a class="nav-link {{ macros.set_class_active(active_page, 'leaderboards') }}" href="{{ url_for('main.index') }}">Leaderboards</a>
+                            </li>
+                            <li class="nav-item dropdown d-xl-none">
+                                <a class="nav-link dropdown-toggle {% if season_num %}{{ macros.set_class_active(active_page + season_num, 'season/' + season_num) }}{% endif %}"
+                                   role="button" data-bs-toggle="dropdown" aria-expanded="false"
+                                   href="#">Seasons</a>
+                                <ul class="dropdown-menu border-0 p-2">
+                                    <li class="m-2"><a class="btn btn-dark border-0 w-100 fw-bold btn-benny team-active-10" role="button" href="{{ url_for('main.season', season_num='10') }}">10</a>
+                                    <li class="m-2"><a class="btn btn-dark border-0 w-100 fw-bold btn-damon team-active-9" role="button" href="{{  url_for('main.season', season_num='9') }}">9</a>
+                                    <li class="m-2"><a class="btn btn-dark border-0 w-100 fw-bold btn-benny team-active-8" role="button" href="{{ url_for('main.season', season_num='8') }}">8</a>
+                                    <li class="m-2"><a class="btn btn-dark border-0 w-100 fw-bold btn-ian team-active-7" role="button" href="{{ url_for('main.season', season_num='7') }}">7</a>
+                                    <li class="m-2"><a class="btn btn-dark border-0 w-100 fw-bold btn-damon team-active-6" role="button" href="{{ url_for('main.season', season_num='6') }}">6</a>
+                                    <li class="m-2"><a class="btn btn-dark border-0 w-100 fw-bold btn-peter team-active-5" role="button" href="{{ url_for('main.season', season_num='5') }}">5</a>
+                                    <li class="m-2"><a class="btn btn-dark border-0 w-100 fw-bold btn-damon team-active-4" role="button" href="{{ url_for('main.season', season_num='4') }}">4</a>
+                                    <li class="m-2"><a class="btn btn-dark border-0 w-100 fw-bold btn-damon team-active-3" role="button" href="{{ url_for('main.season', season_num='3') }}">3</a>
+                                    <li class="m-2"><a class="btn btn-dark border-0 w-100 fw-bold btn-damon team-active-2" role="button" href="{{ url_for('main.season', season_num='2') }}">2</a>
+                                    <li class="m-2"><a class="btn btn-dark border-0 w-100 fw-bold btn-damon team-active-1" role="button" href="{{ url_for('main.season', season_num='1') }}">1</a>
+                                </ul>
+                            </li>
+                            <li class="nav-item">
+                                 <a class="nav-link {{ macros.set_class_active(active_page, 'vehicles') }}" href="{{ url_for('main.vehicles') }}">Vehicles</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link {{ macros.set_class_active(active_page, 'about') }}" href="{{ url_for('main.about') }}">About</a>
+                            </li>
+                        </ul>
                     </div>
                 </div>
-                {% block content %}{% endblock content %}
-            </div>
+            </nav>
+        </header>
 
-            <!-- Season links sidebar -->
-            <div class="col-1 d-none d-xl-block">
-                <div class="d-grid gap-2">
-                    <div class="text-center mb-3">
-                        <h3 class="d-inline align-bottom fs-6 fw-normal">Seasons</h3> <!-- Should not be h3, figure out margins, seem hacky -->
+        <main class="container mt-4">
+            <div class="row">
+                <!-- Main content -->
+                <div class="col-xl-11 col-lg-12">
+                    <div class="d-md-flex gap-0 column-gap-3 mb-3">
+                        <h1 class="d-none d-lg-block fs-5 fw-bold">Damon & Felix Die-Cast Racing League</h1>
+                        <div class="d-flex gap-0 column-gap-3">
+                            <p class="h2 d-none d-lg-block fs-5 fw-light ">//</p>
+                            <h2 class="fs-5 fw-normal">{{ title }}</h2>
+                            {% if season_duration %}
+                                <p class="h2 d-none d-sm-block fs-5 fw-light">//</p>
+                                <h2 class="d-none d-sm-block fs-5 fw-light">{{ season_duration }}</h2>
+                            {% endif %}
+                        </div>
                     </div>
-                    <a class="btn btn-dark border-0 fw-bold btn-benny team-active-10" role="button" href="{{ url_for('main.season', season_num='10') }}">10</a>
-                    <a class="btn btn-dark border-0 fw-bold btn-damon team-active-9" role="button" href="{{ url_for('main.season', season_num='9') }}">9</a>
-                    <a class="btn btn-dark border-0 fw-bold btn-benny team-active-8" role="button" href="{{ url_for('main.season', season_num='8') }}">8</a>
-                    <a class="btn btn-dark border-0 fw-bold btn-ian team-active-7" role="button" href="{{ url_for('main.season', season_num='7') }}">7</a>
-                    <a class="btn btn-dark border-0 fw-bold btn-damon team-active-6" role="button" href="{{ url_for('main.season', season_num='6') }}">6</a>
-                    <a class="btn btn-dark border-0 fw-bold btn-peter team-active-5" role="button" href="{{ url_for('main.season', season_num='5') }}">5</a>
-                    <a class="btn btn-dark border-0 fw-bold btn-damon team-active-4" role="button" href="{{ url_for('main.season', season_num='4') }}">4</a>
-                    <a class="btn btn-dark border-0 fw-bold btn-damon team-active-3" role="button" href="{{ url_for('main.season', season_num='3') }}">3</a>
-                    <a class="btn btn-dark border-0 fw-bold btn-damon team-active-2" role="button" href="{{ url_for('main.season', season_num='2') }}">2</a>
-                    <a class="btn btn-dark border-0 fw-bold btn-damon team-active-1" role="button" href="{{ url_for('main.season', season_num='1') }}">1</a>
+                    {% block error %}{% endblock error %}
+                    {% block content %}{% endblock content %}
+                </div>
 
+                <!-- Season links sidebar -->
+                <div class="col-1 d-none d-xl-block">
+                    <div class="d-grid gap-2">
+                        <div class="text-center mb-3">
+                            <p class="d-inline align-bottom h3 fs-6 fw-normal">Seasons</p>
+                        </div>
+                        <a class="btn btn-dark border-0 fw-bold btn-benny team-active-10" role="button" href="{{ url_for('main.season', season_num='10') }}">10</a>
+                        <a class="btn btn-dark border-0 fw-bold btn-damon team-active-9" role="button" href="{{ url_for('main.season', season_num='9') }}">9</a>
+                        <a class="btn btn-dark border-0 fw-bold btn-benny team-active-8" role="button" href="{{ url_for('main.season', season_num='8') }}">8</a>
+                        <a class="btn btn-dark border-0 fw-bold btn-ian team-active-7" role="button" href="{{ url_for('main.season', season_num='7') }}">7</a>
+                        <a class="btn btn-dark border-0 fw-bold btn-damon team-active-6" role="button" href="{{ url_for('main.season', season_num='6') }}">6</a>
+                        <a class="btn btn-dark border-0 fw-bold btn-peter team-active-5" role="button" href="{{ url_for('main.season', season_num='5') }}">5</a>
+                        <a class="btn btn-dark border-0 fw-bold btn-damon team-active-4" role="button" href="{{ url_for('main.season', season_num='4') }}">4</a>
+                        <a class="btn btn-dark border-0 fw-bold btn-damon team-active-3" role="button" href="{{ url_for('main.season', season_num='3') }}">3</a>
+                        <a class="btn btn-dark border-0 fw-bold btn-damon team-active-2" role="button" href="{{ url_for('main.season', season_num='2') }}">2</a>
+                        <a class="btn btn-dark border-0 fw-bold btn-damon team-active-1" role="button" href="{{ url_for('main.season', season_num='1') }}">1</a>
+                    </div>
                 </div>
             </div>
-        </div>
-    </main>
-</div>
+        </main>
+    </div>
 
     <!-- Bootstrap JS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js" integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN" crossorigin="anonymous"></script>
