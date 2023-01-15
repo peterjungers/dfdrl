@@ -199,9 +199,9 @@ td.peter {
     min-width: 60px;
 }
 
-input {
-    max-width: 300px;
-}
+/*#find-vehicle {*/
+/*    max-width: 300px;*/
+/*}*/
 
 /*.btn-dark.damon:hover,*/
 /*.dropdown > .btn-dark:active,*/
@@ -262,7 +262,11 @@ input:focus::placeholder {
         display: none;
     }
 
-    .wrap {
+    .galaxy-flex-column {
+        flex-direction: column;
+    }
+
+    .galaxy-wrap {
         flex-wrap: wrap;
     }
 

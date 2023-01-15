@@ -1,79 +1,68 @@
 {% extends "template.html" %}
 {% set active_page = "vehicles" %}
-{% block content %}
-    <!-- Vehicle search controls -->
-    <div class="row gx-4 gy-3 mb-3">
-        <div class="col-lg-4 col-md-5 col-sm-12">
-            <!-- Team select -->
-            <div class="d-flex gap-3 mb-3 align-items-center">
-                <div class="dropdown mb-0">
-                    <button id="selected-team-btn" class="btn btn-dark border-0 dropdown-toggle btn-other" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-                        Select Team
-                    </button>
-                    <ul class="dropdown-menu fw-light border-dark">
-                        <li><a class="dropdown-item fw-light team-select item-other" href="#">All teams</a></li>
-                        <li><a class="dropdown-item fw-light team-select item-damon" href="#">Damon</a></li>
-                        <li><a class="dropdown-item fw-light team-select item-ian" href="#">Ian</a></li>
-                        <li><a class="dropdown-item fw-light team-select item-benny" href="#">Benny</a></li>
-                        <li><a class="dropdown-item fw-light team-select item-peter" href="#">Peter</a></li>
-                    </ul>
-                </div>
-                <p class="fw-light mb-0">Team: <span id="show-selected-team" class="fw-bold">All teams</span></p>
-            </div>
 
-            <!-- Vehicle search -->
-            <form> {# Form tag allows Enter key usage for input text field #}
-                <div class="input-group">
-                    <input id="find-vehicle" type="text" class="form-control fw-light border-dark" placeholder="Find vehicle" aria-label="Find vehicle">
-                    <button id="find-vehicle-btn" class="btn btn-dark border-0 btn-other" type="submit">Search</button>
-                </div>
-            </form>
+{% block content %}
+    <!-- Vehicle table search controls -->
+    <div class="d-flex flex-wrap gap-3 align-items-center mb-3">
+        <!-- Team select -->
+        <div class="dropdown">
+            <button id="selected-team-btn" class="btn btn-dark border-0 dropdown-toggle btn-other" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                Select Team
+            </button>
+            <ul class="dropdown-menu fw-light border-dark">
+                <li><a class="dropdown-item fw-light team-select item-other" href="#">All teams</a></li>
+                <li><a class="dropdown-item fw-light team-select item-damon" href="#">Damon</a></li>
+                <li><a class="dropdown-item fw-light team-select item-ian" href="#">Ian</a></li>
+                <li><a class="dropdown-item fw-light team-select item-benny" href="#">Benny</a></li>
+                <li><a class="dropdown-item fw-light team-select item-peter" href="#">Peter</a></li>
+            </ul>
         </div>
 
-        <div class="col-lg-8 col-md-7 col-sm-12">
-            <div class="d-flex gap-3 mb-3 wrap">
-                <!-- Weight search -->
-                <button id="weight-btn" class="btn btn-dark border-0 btn-other">Weight</button>
-                <!-- First Season search -->
-                <div class="dropdown">
-                    <button id="first-season-btn" class="btn btn-dark border-0 dropdown-toggle btn-other" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-                        First Season
-                    </button>
-                    <ul class="dropdown-menu dropdown-menu-end fw-light border-dark dropdown-seasons">
-                        <li><a class="dropdown-item fw-light text-center item-other" href="#">10</a></li>
-                        <li><a class="dropdown-item fw-light text-center item-other" href="#">9</a></li>
-                        <li><a class="dropdown-item fw-light text-center item-other" href="#">8</a></li>
-                        <li><a class="dropdown-item fw-light text-center item-other" href="#">7</a></li>
-                        <li><a class="dropdown-item fw-light text-center item-other" href="#">6</a></li>
-                        <li><a class="dropdown-item fw-light text-center item-other" href="#">5</a></li>
-                        <li><a class="dropdown-item fw-light text-center item-other" href="#">4</a></li>
-                        <li><a class="dropdown-item fw-light text-center item-other" href="#">3</a></li>
-                        <li><a class="dropdown-item fw-light text-center item-other" href="#">2</a></li>
-                        <li><a class="dropdown-item fw-light text-center item-other" href="#">1</a></li>
-                    </ul>
-                </div>
-                <!-- Events search -->
-                <button id="events-btn" class="btn btn-dark border-0 btn-other">Events</button>
+        <!-- Vehicle search -->
+        <form> {# Form tag allows Enter key usage for input text field #}
+            <div class="input-group">
+                <input id="find-vehicle" type="text" class="form-control fw-light border-dark" placeholder="Find vehicle" aria-label="Find vehicle">
+                <button id="find-vehicle-btn" class="btn btn-dark border-0 btn-other" type="submit">Search</button>
             </div>
+        </form>
 
-            <div class="d-flex flex-column flex-sm-row gap-3">
-                <!-- Champions League Vehicles search -->
-                <div>
-                    <button id="cl-vehicles-btn" class="btn btn-dark border-0 btn-other">Champions League Vehicles</button>
-                </div>
-                <!-- Champion, Second, Third searches -->
-                <div class="d-flex gap-3">
-                    <button id="champion-btn" class="btn btn-dark border-0 btn-other"><span class="fw-bold c-champion">C</span></button>
-                    <button id="second-btn" class="btn btn-dark border-0 btn-other"><span class="fw-bold c-second">C</span></button>
-                    <button id="third-btn" class="btn btn-dark border-0 btn-other"><span class="fw-bold c-third">C</span></button>
-                </div>
+        <!-- First Season search -->
+        <div class="dropdown">
+            <button id="first-season-btn" class="btn btn-dark border-0 dropdown-toggle btn-other" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                First Season
+            </button>
+            <ul class="dropdown-menu dropdown-menu-end fw-light border-dark dropdown-seasons">
+                <li><a class="dropdown-item fw-light text-center season-select item-other" href="#">10</a></li>
+                <li><a class="dropdown-item fw-light text-center season-select item-other" href="#">9</a></li>
+                <li><a class="dropdown-item fw-light text-center season-select item-other" href="#">8</a></li>
+                <li><a class="dropdown-item fw-light text-center season-select item-other" href="#">7</a></li>
+                <li><a class="dropdown-item fw-light text-center season-select item-other" href="#">6</a></li>
+                <li><a class="dropdown-item fw-light text-center season-select item-other" href="#">5</a></li>
+                <li><a class="dropdown-item fw-light text-center season-select item-other" href="#">4</a></li>
+                <li><a class="dropdown-item fw-light text-center season-select item-other" href="#">3</a></li>
+                <li><a class="dropdown-item fw-light text-center season-select item-other" href="#">2</a></li>
+                <li><a class="dropdown-item fw-light text-center season-select item-other" href="#">1</a></li>
+            </ul>
+        </div>
+
+        <div class="d-flex flex-wrap gap-3 column-gap-2">
+            <!-- Champions League Vehicles search -->
+            <button id="cl-vehicles-btn" class="btn btn-dark border-0 btn-other">Champions League Vehicles</button>
+
+            <!-- Champion, Second, Third searches -->
+            <div class="d-flex column-gap-2">
+                <button id="champion-btn" class="btn btn-dark border-0 btn-other"><span class="fw-bold c-champion">C</span></button>
+                <button id="second-btn" class="btn btn-dark border-0 btn-other"><span class="fw-bold c-second">C</span></button>
+                <button id="third-btn" class="btn btn-dark border-0 btn-other"><span class="fw-bold c-third">C</span></button>
             </div>
         </div>
     </div>
 
     <!-- Vehicle count -->
-    <div class="mb-3">
-        <p class="fw-light ps-2">Vehicle count: <span id="vehicle-count" class="fw-bold"></span></p>
+    <div class="d-flex flex-wrap gap-0 column-gap-3 mb-3 galaxy-flex-column">
+        <p class="fw-light mb-0">Team: <span id="show-selected-team" class="fw-bold">All teams</span></p>
+        <p class="fw-light mb-0 galaxy-fold">//</p>
+        <p class="fw-light mb-0">Vehicle count: <span id="vehicle-count" class="fw-bold"></span></p>
     </div>
 
     <!-- Vehicle table -->
@@ -98,16 +87,16 @@
                     <td class="fw-bold vehicle-name">{{ row.Vehicle.name }}</td>
                     <td class="d-none d-md-table-cell fw-light team-name">{{ row.Vehicle.team.name }}</td>
                     {% if row.Vehicle.weight %}
-                        <td class="fw-light galaxy-fold">{{ row.Vehicle.weight }}</td>
+                        <td class="fw-light vehicle-weight galaxy-fold">{{ row.Vehicle.weight }}</td>
                     {% else %}
-                        <td class="fw-light galaxy-fold">Unknown</td>
+                        <td class="fw-light vehicle-weight galaxy-fold">Unknown</td>
                     {% endif %}
-                    <td class="d-none d-lg-table-cell fw-light">{{ row.Vehicle.first_season }}</td>
+                    <td class="d-none d-lg-table-cell fw-light first-season">{{ row.Vehicle.first_season }}</td>
                     <td class="fw-light galaxy-fold">{{ row.Vehicle.event_appearances }}</td>
                     <td class="d-none d-sm-table-cell fw-light cla">{{ row.cla }}</td>
-                    <td class="d-none d-lg-table-cell fw-light">{{ row.Vehicle.champion }}</td>
-                    <td class="d-none d-lg-table-cell fw-light">{{ row.Vehicle.second }}</td>
-                    <td class="d-none d-lg-table-cell fw-light">{{ row.Vehicle.third }}</td>
+                    <td class="d-none d-lg-table-cell fw-light champion">{{ row.Vehicle.champion }}</td>
+                    <td class="d-none d-lg-table-cell fw-light second">{{ row.Vehicle.second }}</td>
+                    <td class="d-none d-lg-table-cell fw-light third">{{ row.Vehicle.third }}</td>
                 </tr>
             {% endfor %}
         </tbody>
