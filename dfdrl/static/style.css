@@ -258,6 +258,11 @@ td.peter {
     width: 32%;
 }
 
+/* Retired vehicle font-size (because if is smaller than Bootstrap's fs-6 */
+.retired-font-size {
+    font-size: .75rem;
+}
+
 
 /* || GALAXY FOLD VIEWPORT */
 @media screen and (max-width: 320px) {

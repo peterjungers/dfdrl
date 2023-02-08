@@ -5,11 +5,31 @@ Date: December 2022/January 2023
  */
 
 
+// One function specific to index (leaderboard) page:
+
+
+// Adds (R) to retired vehicles on vehicle leaderboard:
+function setRetiredVehicles() {
+    const tableRows = document.querySelector("#vehicle-leaderboard").rows;
+    const retiredVehicles = ["Jeepster"];
+
+    for (i = 0; i < tableRows.length; i++) {
+        for (j = 0; j < retiredVehicles.length; j++) {
+            if (tableRows[i].cells[0].innerHTML === retiredVehicles[j]) {
+                tableRows[i].cells[0].innerHTML +=
+                    "<span class='fw-normal fst-italic retired-font-size'> (R)</span>";
+            }
+        }
+    }
+}
+
+
 // One function specific to season pages:
 
 
-// Adds team CSS class to season links of respective team:
-function setTeamClass(active_page_season, team) {
+// Adds team CSS class to season links of respective team;
+// active_page_season and team variables sent from seasons.html:
+function setTeamClass() {
     const seasons = [10, 9, 8, 7, 6, 5, 4, 3, 2, 1];
 
     seasons.forEach(season_num => {
@@ -75,13 +95,11 @@ function addCountColumn() {
         count = 0;
     } else {
         const columnAmount = visibleRows[0].cells.length;
-
         if (columnAmount === 10) {
             visibleRows.forEach(row => {
                 row.deleteCell(0);
             });
         }
-
         count = visibleRows.length;
         for (let c = 0; c < count; c += 1) {
             visibleRows[c].insertCell(0).innerText = c + 1;
@@ -253,7 +271,6 @@ function championsLeagueOptions() {
             // "All teams" search:
             place.forEach(cell => {
                 if (cell.innerText === "0") {
-                    console.log(cell.innerText);
                     cell.parentElement.classList.toggle("hidden");
                 }
             });
@@ -371,20 +388,25 @@ function setSelectedTeam(teamCSS, team) {
 }
 
 
+// For index (leaderboards) page, specifically the vehicle leaderboard:
+if (document.querySelector("#vehicle-leaderboard")) {
+    window.addEventListener("DOMContentLoaded", setRetiredVehicles)
+}
+
 // For season pages:
 if (typeof active_page_season !== "undefined") {
     window.addEventListener(
-        "DOMContentLoaded", setTeamClass(active_page_season, team));
+        "DOMContentLoaded", setTeamClass);
 }
 
 // For sitewide navbar links, but also reliant on setTeamClass():
-window.addEventListener("DOMContentLoaded", setAriaCurrent());
+window.addEventListener("DOMContentLoaded", setAriaCurrent);
 
 // For vehicles.html:
-if (document.URL.includes("vehicles")) {
-    window.addEventListener("DOMContentLoaded", addCountColumn());
-    window.addEventListener("DOMContentLoaded", getTeamRows());
-    window.addEventListener("DOMContentLoaded", findVehicle());
-    window.addEventListener("DOMContentLoaded", firstSeason());
-    window.addEventListener("DOMContentLoaded", championsLeagueOptions());
+if (document.querySelector("#vehicle-table")) {
+    window.addEventListener("DOMContentLoaded", addCountColumn);
+    window.addEventListener("DOMContentLoaded", getTeamRows);
+    window.addEventListener("DOMContentLoaded", findVehicle);
+    window.addEventListener("DOMContentLoaded", firstSeason);
+    window.addEventListener("DOMContentLoaded", championsLeagueOptions);
 }
