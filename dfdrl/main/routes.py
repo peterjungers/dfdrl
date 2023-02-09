@@ -35,18 +35,23 @@ def season(season_num):
     title = f"Season {season_num}"
 
     season_duration = get_season_duration(season_num)
-    regular_season, champions_league = get_season(season_num)
-    # cl stands for Champions League:
-    cl_results, champion = get_cl_results(season_num)
+    # If wrong season_num URL is manually entered,
+    # season_duration returns None
+    if season_duration:
+        regular_season, champions_league = get_season(season_num)
+        # cl stands for Champions League:
+        cl_results, champion = get_cl_results(season_num)
 
-    return render_template("season.html",
-                           title=title,
-                           season_num=season_num,
-                           season_duration=season_duration,
-                           regular_season=regular_season,
-                           champions_league=champions_league,
-                           cl_results=cl_results,
-                           champion=champion)
+        return render_template("season.html",
+                               title=title,
+                               season_num=season_num,
+                               season_duration=season_duration,
+                               regular_season=regular_season,
+                               champions_league=champions_league,
+                               cl_results=cl_results,
+                               champion=champion)
+    else:
+        return render_template("errors/404.html")
 
 
 @main.route("/vehicles")
@@ -54,7 +59,6 @@ def vehicles():
     title = "Vehicles"
     # Count of all Champions League Appearances (CLA):
     cla = func.count(ChampionsLeagueResult.vehicle).label("cla")
-
 
     league_vehicles = db.session.execute(
                       select(Vehicle, cla)
@@ -188,41 +192,43 @@ def get_season_duration(season_num):
     racing_season = db.session.execute(
                     select(Event)
                     .filter(Event.season_num == season_num)
-                    )
-    dates = []
-    for row in racing_season:
-        dates.append(row.Event.date)
+                    ).all()
 
-    def get_season_name(year):
-        if (year.month, year.day) < (3, 20):
-            season_name = "Winter"
-        elif (year.month, year.day) < (6, 17):
-            season_name = "Spring"
-        elif (year.month, year.day) < (9, 21):
-            season_name = "Summer"
-        elif (year.month, year.day) < (12, 21):
-            season_name = "Fall"
-        return season_name
+    if racing_season:
+        dates = []
+        for row in racing_season:
+            dates.append(row.Event.date)
 
-    date_start = min(dates)
-    season_name_start = get_season_name(date_start)
-    date_end = max(dates)
-    season_name_end = get_season_name(date_end)
+        def get_season_name(year):
+            if (year.month, year.day) < (3, 20):
+                season_name = "Winter"
+            elif (year.month, year.day) < (6, 17):
+                season_name = "Spring"
+            elif (year.month, year.day) < (9, 21):
+                season_name = "Summer"
+            elif (year.month, year.day) < (12, 21):
+                season_name = "Fall"
+            return season_name
 
-    if (date_start.year == date_end.year
-        and season_name_start == season_name_end):
-        # eg, Summer 2020:
-        season_duration = f"{season_name_start} {date_start.year}"
-    elif date_start.year == date_end.year:
-        # eg, Summer–Fall 2020
-        season_duration = (f"{season_name_start}–"
-                           f"{season_name_end} {date_start.year}")
-    elif date_start.year != date_end.year:
-        # eg, Fall 2020–Winter 2021:
-        season_duration = (f"{season_name_start} {date_start.year}–"
-                           f"{season_name_end} {date_end.year}")
+        date_start = min(dates)
+        season_name_start = get_season_name(date_start)
+        date_end = max(dates)
+        season_name_end = get_season_name(date_end)
 
-    return season_duration
+        if (date_start.year == date_end.year
+            and season_name_start == season_name_end):
+            # eg, Summer 2020:
+            season_duration = f"{season_name_start} {date_start.year}"
+        elif date_start.year == date_end.year:
+            # eg, Summer–Fall 2020
+            season_duration = (f"{season_name_start}–"
+                               f"{season_name_end} {date_start.year}")
+        elif date_start.year != date_end.year:
+            # eg, Fall 2020–Winter 2021:
+            season_duration = (f"{season_name_start} {date_start.year}–"
+                               f"{season_name_end} {date_end.year}")
+
+        return season_duration
 
 
 def get_season(season_num):

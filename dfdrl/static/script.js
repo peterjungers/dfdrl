@@ -336,7 +336,7 @@ and shows selected team text:
 */
 function setSelectedTeam(teamCSS, team) {
     const selectedTeamBtn = document.querySelector("#selected-team-btn");
-    const findVehicleBtn = document.querySelector("#find-vehicle-btn")
+    const findVehicleBtn = document.querySelector("#find-vehicle-btn");
     const firstSeasonBtn = document.querySelector("#first-season-btn");
     const championsLeagueVehiclesBtn =
         document.querySelector("#cl-vehicles-btn");
@@ -390,7 +390,7 @@ function setSelectedTeam(teamCSS, team) {
 
 // For index (leaderboards) page, specifically the vehicle leaderboard:
 if (document.querySelector("#vehicle-leaderboard")) {
-    window.addEventListener("DOMContentLoaded", setRetiredVehicles)
+    window.addEventListener("DOMContentLoaded", setRetiredVehicles);
 }
 
 // For season pages:

@@ -1,12 +1,11 @@
 /*
-Custom CSS styles for DFDRL website
+Custom CSS styles for DFDRL website to augment Bootstrap
 Author: Peter Jungers
 Date: December 2022/January 2023
  */
 
 
 /* || GENERAL SITEWIDE */
-
 :root {
     --damon: #6fa8dc;
     --felix: #f6b26b;
@@ -23,7 +22,7 @@ Date: December 2022/January 2023
     display: none;
 }
 
-/* || Input text field and form-control */
+/* Input text field and form-control */
 input:focus::placeholder {
     color: transparent;
 }
@@ -36,6 +35,8 @@ input:focus::placeholder {
 .form-control:focus {
     background-color: rgba(33, 37, 41, 0.05); /* --bs-dark */
 }
+/* END Input text field and form-control */
+/* END GENERAL SITEWIDE */
 
 
 /* || NAVBAR */
@@ -63,12 +64,12 @@ input:focus::placeholder {
     display: inline-block;
     width: 4.25rem;
 }
+/* END NAVBAR */
 
 
 /* || TEAM CLASSES */
-
 /*
-|| Team background colors used in data tables throughout site;
+|| Team background and text colors used in data tables throughout site;
 td prefix necessary for podium leaderboard table at index.html
 */
 .damon,
@@ -103,6 +104,7 @@ td.peter {
 .peter {
     color: var(--bs-dark);
 }
+/* END Team background and text colors */
 
 /* || Team buttons in navbar dropdown and season sidebar at template.html */
 .btn-damon:hover,
@@ -152,8 +154,9 @@ td.peter {
 .btn-dark.btn-peter:active {
     color: var(--bs-dark);
 }
+/* END Team buttons in navbar dropdown and season sidebar */
 
-/* || For dropdown items and search buttons at vehicles.html */
+/* || For team dropdown items and search buttons at vehicles.html */
 .item-other:hover,
 .item-other:focus,
 .btn-other:hover,
@@ -226,10 +229,11 @@ td.peter {
 .btn-dark.peter:active {
     color: var(--bs-dark);
 }
+/* END For team dropdown items and search buttons */
+/* END TEAM CLASSES */
 
 
-/* MISCELLANEOUS STYLES */
-
+/* || MISCELLANEOUS STYLES */
 .dropdown-menu.dropdown-seasons {
     min-width: 60px;
 }
@@ -258,10 +262,11 @@ td.peter {
     width: 32%;
 }
 
-/* Retired vehicle font-size (because if is smaller than Bootstrap's fs-6 */
+/* Retired vehicle font-size (because it is smaller than Bootstrap's fs-6 */
 .retired-font-size {
     font-size: .75rem;
 }
+/* END MISCELLANEOUS STYLES */
 
 
 /* || GALAXY FOLD VIEWPORT */
@@ -282,3 +287,4 @@ td.peter {
         width: 96%;
     }
 }
+/* END GALAXY FOLD VIEWPORT */
