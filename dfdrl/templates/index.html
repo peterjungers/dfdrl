@@ -1,0 +1,182 @@
+{% extends "template.html" %}
+
+{% set active_page = "leaderboards" %}
+
+{% block content %}
+    <div class="row">
+        <div class="col-lg-9">
+            <!-- Team leaderboard -->
+            <table class="table table-sm mb-4 border-bottom border-dark shadow">
+                <thead class="table-dark">
+                    <tr>
+                        <th class="fw-normal" scope="col">Team</th>
+                        <th class="fw-normal" scope="col">Points</th>
+                        <th class="d-none d-md-table-cell fw-normal" scope="col">Total Cups</th>
+                        <th class="fw-normal" scope="col">Champion</th>
+                        <th class="fw-normal galaxy-hide" scope="col">Second</th>
+                        <th class="fw-normal galaxy-hide" scope="col">Third</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for row in team_leaderboard %}
+                        <tr class="{{ row.Vehicle.team.name|lower }}">
+                            <td class="fw-bold">{{ row.Team.name }}</td>
+                            <td class="fw-light">{{ row.points }}</td>
+                            <td class="d-none d-md-table-cell fw-light">{{ row.total_cups }}</td>
+                            <td class="fw-light">{{ row.team_champion }}</td>
+                            <td class="fw-light galaxy-hide">{{ row.team_second }}</td>
+                            <td class="fw-light galaxy-hide">{{ row.team_third }}</td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+
+            <!-- Podium results  -->
+            <table class="table table-sm mb-4 border-bottom border-dark shadow">
+                <thead class="table-dark">
+                <tr>
+                    <th class="fw-normal" scope="col">No.</th>
+                    <th class="fw-normal col-width" scope="col">Champion</th>
+                    <th class="fw-normal col-width galaxy-hide" scope="col">Second</th>
+                    <th class="fw-normal col-width galaxy-hide" scope="col">Third</th>
+                </tr>
+                </thead>
+                <tbody>
+                    {% for row in podium_results %}
+                        <tr>
+                            <td class="table-dark fw-light text-center align-middle">{{ row["season"] }}</td>
+                            <td class="border-dark border-end fw-light col-width {{ row['champion']['team']|lower }}">{{ row["champion"]["vehicle"] }}</td>
+                            <td class="border-dark border-end fw-light col-width galaxy-hide {{ row['second']['team']|lower }}">{{ row["second"]["vehicle"] }}</td>
+                            <td class="fw-light col-width galaxy-hide {{ row['third']['team']|lower }}">{{ row["third"]["vehicle"] }}</td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+
+            <!-- Vehicle leaderboard  -->
+            <table id="vehicle-leaderboard" class="table table-sm mb-4 border-bottom border-dark shadow">
+                <thead class="table-dark">
+                <tr>
+                    <th class="fw-normal" scope="col">Vehicle</th>
+                    <th class="d-none d-md-table-cell fw-normal" scope="col">Team</th>
+                    <th class="fw-normal" scope="col">Events</th>
+                    <th class="fw-normal galaxy-hide" scope="col">CLA</th>
+                    <th class="fw-normal galaxy-hide" scope="col">RRE</th>
+                    <th class="fw-normal" scope="col">Points</th>
+                    <th class="fw-normal" scope="col">Cups</th>
+                </tr>
+                </thead>
+                <tbody>
+                    {% for row in vehicle_leaderboard %}
+                        {% if row.points != 0 %}
+                            <tr class="fw-bold {{ row.Vehicle.team.name|lower }}">
+                                <td class="fw-bold">{{ row.Vehicle.name }}</td>
+                                <td class="d-none d-md-table-cell fw-light">{{ row.Vehicle.team.name }}</td>
+                                <td class="fw-light">{{ row.Vehicle.event_appearances }}</td>
+                                <td class="fw-light galaxy-hide">{{ row.cla }}</td>
+                                <td class="fw-light galaxy-hide">{{ ("%.3f"|format(row.rre)).lstrip("0") }}</td>
+                                <td class="fw-light">{{ row.points }}</td>
+                                <td class="table-dark fw-bold">
+                                    {% if row.Vehicle.champion or row.Vehicle.second or row.Vehicle.third %}
+                                        <span class="c-champion">{{ "C " * (row.Vehicle.champion) }}</span>
+                                        <span class="c-second">{{ "C " * (row.Vehicle.second) }}</span>
+                                        <span class="c-third">{{ "C " * (row.Vehicle.third) }}</span>
+                                    {% endif %}
+                                </td>
+                            </tr>
+                        {% endif %}
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+
+        <div class="col-lg-3">
+            <div class="row">
+                <!-- Event tally  -->
+                <div class="col-lg-12 col-md-6">
+                    <table class="table table-sm bg-dark bg-opacity-25 mb-4 border-bottom border-dark shadow">
+                        <thead class="table-dark">
+                        <tr>
+                            <th class="fw-normal" scope="col">Event</th>
+                            <th class="fw-normal" scope="col">Amount</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                            {% for row in event_tallies %}
+                                <tr>
+                                    <td class="fw-bold">{{ row.EventType.name }}</td>
+                                    <td class="fw-light">{{ row.event_sum }}</td>
+                                </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+
+                <!-- Racing affiliates  -->
+                <div class="col-lg-12 col-md-6">
+                    <table class="table table-sm mb-4 border-bottom border-dark shadow">
+                        <thead class="table-dark">
+                        <tr>
+                            <th class="fw-normal" scope="col">Team</th>
+                            <th class="fw-normal" scope="col">Affiliate</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                            {% for row in affiliates %}
+                                <tr class="{{ row.Team.name|lower }}">
+                                    <td class="fw-bold">{{ row.Team.name }}</td>
+                                    <td class="fw-light">{{ row.Team.affiliate }}</td>
+                                </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- Key -->
+            <div class="col-lg-12">
+                <table class="table table-sm bg-dark bg-opacity-25 mb-4 border-bottom border-dark shadow">
+                    <thead class="table-dark">
+                        <tr>
+                            <th class="fw-normal" scope="col">Key</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td class="fw-light p-2">
+                                <span class="fw-bold">Events</span>—Total combined appearances of all Regular Season and Champions League events
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="fw-light p-2">
+                                <span class="fw-bold">CLA</span>—Champions League Appearances
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="fw-light p-2">
+                                <span class="fw-bold">RRE</span>—Ratio of Racing Excellence: Points divided by event appearances, effectively measuring how many points are earned per event appearance. The higher the ratio, the
+                                more the excellence. Highest ratio possible is .500 (obtained by qualifying for Champions League in first ever Regular Season appearance, then winning first place in
+                                Champions League), but since 1.000 is more representative of excellence, the calculated ratio is doubled.
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="fw-light p-2">
+                                <span class="fw-bold">Points</span>—Champion: 3 points; second place: 2 points; third place: 1 point
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="fw-light p-2">
+                                <span class="fw-bold">Point tiebreakers</span>—First tiebreaker: higher RRE; second tiebreaker: lower CLA
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="fw-light p-2">
+                                <span class="fw-bold">(R)</span>—Retired vehicle
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+{% endblock content %}
