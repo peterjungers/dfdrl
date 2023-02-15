@@ -159,10 +159,10 @@ td.peter {
 /* || For team dropdown items and search buttons at vehicles.html */
 .item-other:hover,
 .item-other:focus,
-.btn-other:hover,
-.btn-other:focus,
-.btn-dark.btn-other:active,
-.btn.show.btn-other {
+.other:hover,
+.other:focus,
+.btn-dark.other:active,
+.btn.show.other {
     background-color: var(--bs-dark);
     color: white;
 }

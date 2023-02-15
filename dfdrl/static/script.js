@@ -131,7 +131,7 @@ function getTeamRows() {
         teamOption.addEventListener("click", () => {
             if (teamOption.innerText === "All teams") {
                 resetAllRows();
-                teamCSS = "btn-other"; // Default, non-team, button styles
+                teamCSS = "other";  // Default, non-team, styles
             } else {
                 // The selected teamOption to lowercase equals team CSS class:
                 teamCSS = teamOption.innerText.toLowerCase();
@@ -345,7 +345,7 @@ function setSelectedTeam(teamCSS, team) {
 
     // Remove any set class from buttons:
     const teamCSSClasses =
-        ["btn-other", "damon", "felix", "ian", "benny", "peter"];
+        ["other", "damon", "felix", "ian", "benny", "peter"];
     teamCSSClasses.forEach(teamCSSClass => {
         if (selectedTeamBtn.classList.contains(teamCSSClass)) {
             selectedTeamBtn.classList.remove(teamCSSClass);
